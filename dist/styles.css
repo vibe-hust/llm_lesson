@@ -40,11 +40,7 @@ code { font-family: var(--mono); }
 
 /* A compact institutional header and ordinary section navigation. */
 .site-header { border-top: 3px solid var(--accent); }
-.header-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 16px; }
-.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font: 500 21px/1.2 var(--heading); }
-.brand:hover { text-decoration: none; }
-.brand img { flex-shrink: 0; }
-.brand-sub { display: block; margin-top: 3px; font: 13px/1.5 var(--sans); color: var(--muted); }
+.header-inner { display: flex; align-items: center; justify-content: flex-end; padding-block: 10px; }
 .header-source { font-size: 14px; white-space: nowrap; }
 .course-nav { position: sticky; top: 0; z-index: 10; background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .course-nav .wrap { display: flex; flex-wrap: wrap; gap: 0 30px; }
@@ -227,9 +223,7 @@ dialog::backdrop { background: #161a2166; }
 @media (max-width: 700px) {
   html { scroll-padding-top: 110px; }
   .wrap { width: calc(100% - 40px); }
-  .header-inner { min-height: 76px; gap: 16px; }
-  .brand-sub { font-size: 12px; }
-  .header-source { font-size: 12px; white-space: normal; text-align: right; max-width: 96px; }
+  .header-source { font-size: 13px; }
   .course-nav .wrap { gap: 0 22px; }
   .course-nav a { font-size: 14px; padding: 9px 0 7px; }
   h1 { font-size: 26px; }

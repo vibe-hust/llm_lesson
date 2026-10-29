@@ -1,0 +1,60 @@
+/* A quiet, single-column reading layout using the course site's existing colors. */
+[hidden] { display: none !important; }
+.lesson-header { border-bottom: 1px solid var(--line); }
+.lesson-header-inner { max-width: 1000px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.lesson-home { font-size: 13px; }
+.lesson-home:hover { color: var(--accent); }
+.lesson-document { width: min(760px, calc(100% - 40px)); margin: 64px auto 80px; font-size: 16px; line-height: 1.8; }
+.lesson-document h1 { font-size: clamp(44px, 7vw, 68px); margin-bottom: 24px; }
+.lesson-lead { font-size: 20px; color: var(--muted); line-height: 1.6; }
+.lesson-meta-line { margin-top: 24px; font-size: 12px; color: var(--muted); }
+.lesson-document section { margin-top: 48px; scroll-margin-top: 24px; }
+.lesson-document h2 { font-size: 31px; margin-bottom: 20px; }
+.lesson-document h3 { font-size: 18px; margin: 24px 0 12px; }
+.lesson-document p + p { margin-top: 16px; }
+.lesson-document ul, .lesson-document ol { padding-left: 24px; }
+.lesson-document li { margin: 10px 0; }
+.lesson-document a:not(.button) { text-decoration: underline; text-decoration-color: #acb5a7; text-underline-offset: 4px; }
+.lesson-document code { font-family: var(--mono); font-size: .87em; }
+.lesson-document :not(pre) > code { background: var(--cream); padding: 2px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+.lesson-document pre { padding: 20px; background: var(--cream); border: 1px solid var(--line); border-radius: 5px; overflow-x: auto; font: 13px/1.7 var(--mono); tab-size: 4; }
+.lesson-callout { padding: 20px 24px; background: var(--cream); border-left: 3px solid var(--accent); margin-top: 24px; }
+.lesson-table-wrap { overflow-x: auto; }
+.lesson-document table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.6; }
+.lesson-document th, .lesson-document td { text-align: left; vertical-align: top; padding: 13px 12px; border-bottom: 1px solid var(--line); }
+.lesson-document th { color: var(--ink); font-weight: 600; }
+.python-exercise { margin-top: 48px; border: 1px solid var(--line); border-radius: 6px; }
+.python-exercise summary { cursor: pointer; padding: 20px 24px; color: var(--ink); font-weight: 600; }
+.python-exercise summary::marker { color: var(--accent); }
+.python-exercise[open] summary { border-bottom: 1px solid var(--line); }
+.exercise-body { padding: 0 24px 24px; }
+.exercise-body > p:first-child { margin-top: 22px; }
+.exercise-note { font-size: 13px; color: var(--muted); }
+.exercise-body label { display: block; font-size: 13px; font-weight: 600; margin: 24px 0 8px; }
+.python-editor { display: block; width: 100%; min-height: 330px; resize: vertical; border: 1px solid var(--line); background: #fffefa; color: var(--text); border-radius: 4px; padding: 16px; font: 12px/1.7 var(--mono); tab-size: 4; white-space: pre; overflow: auto; }
+.exercise-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 16px; }
+.exercise-actions .button { padding: 10px 16px; }
+.exercise-actions a { font-size: 13px; margin-left: auto; }
+.exercise-status { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
+.exercise-output { min-height: 70px; max-height: 340px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.lesson-next { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding-top: 32px; margin-top: 48px; border-top: 1px solid var(--line); font-size: 14px; }
+.lesson-footer { border-top: 1px solid var(--line); padding: 24px; text-align: center; font-size: 12px; color: var(--muted); }
+textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 600px) {
+  .lesson-header-inner { padding: 20px; }
+  .lesson-header .brand { font-size: 20px; }
+  .lesson-home { font-size: 12px; }
+  .lesson-document { margin-top: 40px; font-size: 15px; }
+  .lesson-lead { font-size: 18px; }
+  .lesson-document section, .python-exercise { margin-top: 36px; }
+  .lesson-document h2 { font-size: 28px; }
+  .exercise-body { padding: 0 16px 20px; }
+  .python-exercise summary { padding: 18px 16px; }
+  .exercise-actions a { width: 100%; margin: 4px 0 0; }
+  .lesson-document pre { padding: 14px; font-size: 12px; }
+}
+@media print {
+  .lesson-header, .lesson-next, .python-exercise { display: none; }
+  .lesson-document { width: 100%; margin: 0; }
+  .lesson-document h1 { font-size: 36px; }
+}

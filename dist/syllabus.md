@@ -451,7 +451,7 @@ For the initial project offering, the teaching team can prepare 30 development c
 
 Prepare a common Python environment, starter notebooks, small datasets, model checkpoints, model inference access, documented tools, and acceptance tests. Core work should be accessible from ordinary student laptops, with shared compute for larger model inference and demonstrations. Actual model selection and compute availability must be checked before teaching.
 
-The website provides an attention calculator and a scripted agent walkthrough. Full lab notebooks, model services, datasets, and the capstone sandbox remain teaching-team preparation tasks.
+The website provides an attention calculator, a scripted agent walkthrough, and detailed study guides for Transformer fundamentals and LLM agents. Each study guide includes a runnable standard-library Python exercise, with browser execution and a downloadable file. The agent exercise uses a deterministic mock model. Full training notebooks, live model services, datasets, and the capstone sandbox remain teaching-team preparation tasks.
 
 ## References
 

@@ -73,6 +73,7 @@
         <div class="lesson-grid" id="lesson-grid"></div>
         <noscript><p>The lesson explorer needs JavaScript. Read the complete <a href="syllabus.md">downloadable syllabus</a> for all lessons, exercises, and assessment details.</p></noscript>
         <div class="path-note"><span aria-hidden="true">↳</span><p><strong>The same block, two applications.</strong> Build a miniature language model and a small Vision Transformer before connecting pretrained models to an agent.</p></div>
+        <div class="full-lesson-links" aria-label="Detailed lesson pages"><span>STUDY GUIDES</span><a href="lessons/transformer-fundamentals.html">Transformer fundamentals →</a><a href="lessons/llm-agents.html">LLM agents →</a></div>
       </div>
     </section>
     <section id="studio" class="section studio-section">
@@ -82,12 +83,12 @@
           <div class="experiment-controls"><div class="segmented" role="group" aria-label="Attention input type"><button data-example="text" aria-pressed="true" class="active">Text tokens</button><button data-example="vision" aria-pressed="false">Image patches</button></div><label class="toggle-label"><input id="causal-toggle" type="checkbox" checked><span class="toggle-track" aria-hidden="true"></span>Causal mask</label></div>
           <div class="attention-layout"><div><span class="control-label">CHOOSE A QUERY</span><div class="query-buttons" id="query-buttons" role="group" aria-label="Choose a query token"></div></div><div class="attention-matrix" id="attention-matrix" role="table" aria-label="Attention weights"></div></div>
           <div class="temperature-control"><label for="temperature">Temperature <output id="temperature-value" for="temperature">1.0</output></label><input type="range" id="temperature" min="0.3" max="2" step="0.1" value="1"><span>Sharper</span><span>More distributed</span></div>
-          <p class="experiment-result" id="attention-result" aria-live="polite"></p><p class="demo-note">A toy calculation with fixed Q/K vectors. The patch labels are illustrative; they are not predictions from a trained model.</p>
+          <p class="experiment-result" id="attention-result" aria-live="polite"></p><p class="demo-note">A toy calculation with fixed Q/K vectors. The patch labels are illustrative; they are not predictions from a trained model.</p><a class="text-link studio-lesson-link" href="lessons/transformer-fundamentals.html">Read the full lesson →</a>
         </article>
         <article class="experiment agent-experiment"><div class="experiment-top"><span class="mono">EXPERIMENT 02</span><span class="mini-tag">LLM AGENTS</span></div><h3>Watch a task become actions.</h3><p>Follow a bounded agent loop from a request to a recommendation supported by tool results.</p><div class="agent-request"><span class="control-label">THE TASK</span><p>“Find a model for image classification and suggest a check before I use it.”</p></div>
           <div class="agent-stages" aria-label="Agent stages"><span data-stage="0">Observe</span><i aria-hidden="true">→</i><span data-stage="1">Act</span><i aria-hidden="true">→</i><span data-stage="2">Update</span><i aria-hidden="true">→</i><span data-stage="3">Verify</span><i aria-hidden="true">→</i><span data-stage="4">Stop</span></div>
           <div class="agent-log" id="agent-log" role="log" aria-live="polite"><div class="agent-empty"><span aria-hidden="true">↳</span><p>The task is ready.<br>Run the first step to inspect the workflow.</p></div></div>
-          <div class="agent-actions"><button class="button button-dark" id="agent-next">Run first step <span aria-hidden="true">→</span></button><button class="reset-button" id="agent-reset" disabled>Reset</button><span id="agent-progress">0 / 5</span></div><p class="demo-note">Scripted teaching walkthrough. No live LLM is running here; the full project uses a model to select actions.</p>
+          <div class="agent-actions"><button class="button button-dark" id="agent-next">Run first step <span aria-hidden="true">→</span></button><button class="reset-button" id="agent-reset" disabled>Reset</button><span id="agent-progress">0 / 5</span></div><p class="demo-note">Scripted teaching walkthrough. No live LLM is running here; the full project uses a model to select actions.</p><a class="text-link studio-lesson-link" href="lessons/llm-agents.html">Read the full lesson →</a>
         </article>
       </div></div>
     </section>

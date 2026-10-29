@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
-import { readFile, access } from 'node:fs/promises';
+import { readFile, access, readdir } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { lessons, resources, tracks, projects } from '../dist/content.js';
 import { attentionWeights, attentionExamples } from '../dist/attention.js';
+import { ENABLE_PYTHON_EXERCISES } from '../dist/config.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 assert.equal(lessons.length, 16);
@@ -31,15 +33,36 @@ for (const example of Object.values(attentionExamples)) {
 }
 assert.deepEqual(attentionWeights([1, 0], [[1, 0], [1, 0]]), [0.5, 0.5]);
 assert.throws(() => attentionWeights([1], [[1]], { temperature: 0 }));
-const html = await readFile(path.join(root, 'dist/index.html'), 'utf8');
-const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
-assert.equal(new Set(ids).size, ids.length, 'HTML IDs must be unique');
-for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-  const target = match[1];
-  if (target === '#') continue;
-  if (target.startsWith('#')) assert.ok(ids.includes(target.slice(1)), `Missing anchor ${target}`);
-  else if (!target.startsWith('https://')) await access(path.join(root, 'dist', target));
+assert.equal(typeof ENABLE_PYTHON_EXERCISES, 'boolean');
+const dist = path.join(root, 'dist');
+async function walk(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nested = await Promise.all(entries.map(entry => entry.isDirectory()
+    ? walk(path.join(directory, entry.name)) : [path.join(directory, entry.name)]));
+  return nested.flat();
+}
+const files = await walk(dist);
+const pages = new Map();
+for (const file of files.filter(file => file.endsWith('.html'))) {
+  const html = await readFile(file, 'utf8');
+  const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(new Set(ids).size, ids.length, `Duplicate HTML IDs in ${file}`);
+  pages.set(file, { html, ids });
+}
+for (const [file, { html }] of pages) {
+  for (const match of html.matchAll(/(?:href|src|data-source)="([^"]+)"/g)) {
+    const target = match[1];
+    if (/^https?:/.test(target)) continue;
+    const [relative, anchor] = target.split('#');
+    const destination = relative ? path.resolve(path.dirname(file), relative) : file;
+    await access(destination);
+    if (anchor) assert.ok(pages.get(destination)?.ids.includes(anchor), `Missing anchor ${target} in ${file}`);
+  }
+}
+for (const file of files.filter(file => file.endsWith('.js'))) {
+  execFileSync(process.execPath, ['--check', file]);
 }
 const syllabus = await readFile(path.join(root, 'dist/syllabus.md'), 'utf8');
 for (const lesson of lessons) assert.ok(syllabus.includes(lesson.title), `Download missing lesson ${lesson.id}`);
-console.log('Passed: 16 lessons, 32 hours, strand allocations, resource mappings, attention normalization and masking, local links, and syllabus completeness.');
+execFileSync('python3', [path.join(root, 'scripts/check_exercises.py')], { stdio: 'inherit' });
+console.log(`Passed: 16 lessons, 32 hours, resource mappings, attention checks, ${pages.size} HTML pages and local links, JavaScript syntax, Python exercises, and syllabus completeness.`);

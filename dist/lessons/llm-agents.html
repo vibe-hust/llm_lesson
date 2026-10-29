@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#233b35">
+  <meta name="description" content="Learn how an LLM agent selects tools, uses observations, and stops. Run a small Python agent loop with a mock model and real tools.">
+  <title>LLM agents · VIBE Course Studio</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="lesson.css">
+  <script type="module" src="lesson.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="lesson-header"><div class="lesson-header-inner">
+    <a class="brand" href="../index.html" aria-label="VIBE Course Studio home"><img src="../assets/favicon.svg" width="32" height="32" alt=""><span>VIBE<span class="brand-sub">COURSE STUDIO</span></span></a>
+    <a class="lesson-home" href="../index.html#syllabus">← All lessons</a>
+  </div></header>
+  <main id="main" class="lesson-document">
+    <article>
+      <header>
+        <p class="eyebrow">STUDY GUIDE 02 · LLM AGENTS</p>
+        <h1>From a model<br>to <em>an agent.</em></h1>
+        <p class="lesson-lead">Give a model a task, a few tools, and a way to observe the results. Keep the loop small enough to trace, test, and stop.</p>
+        <p class="lesson-meta-line">Companion to lessons 12–15 · Experiment bundle D<br>Prerequisites: Python functions, dictionaries, loops, and basic model inference</p>
+      </header>
+
+      <section aria-labelledby="goals">
+        <h2 id="goals">What you will learn</h2>
+        <p>After this guide, you should be able to separate the model from the code that executes tools, track an agent’s state, and test failure cases. You will connect these ideas to an assistant that uses both text and visual evidence.</p>
+        <div class="lesson-callout"><strong>Our task:</strong> “Find a model for image classification and tell me what to check before using it.” A successful result must cite a catalog record and include a check from that record. The exercise uses a fictional catalog so the evidence is easy to inspect.</div>
+      </section>
+
+      <section aria-labelledby="parts">
+        <h2 id="parts">1. Identify the moving parts</h2>
+        <p>A language model predicts tokens. An application can interpret some of those tokens as a structured request to call a tool. The surrounding Python code decides whether that request is valid, executes the tool, and returns an observation to the model.</p>
+        <div class="lesson-table-wrap"><table>
+          <thead><tr><th scope="col">Part</th><th scope="col">Responsibility in our example</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Model / policy</th><td>Choose a search, inspect a result, or produce a final answer.</td></tr>
+            <tr><th scope="row">Tools</th><td>Search the catalog and read a particular model record.</td></tr>
+            <tr><th scope="row">State</th><td>Keep the original request and the actions and observations so far.</td></tr>
+            <tr><th scope="row">Controller</th><td>Validate actions, call tools, update state, and enforce a step budget.</td></tr>
+            <tr><th scope="row">Evaluator</th><td>Check whether the answer is supported by the retrieved record.</td></tr>
+          </tbody>
+        </table></div>
+        <p>In a fixed workflow, the developer specifies the sequence of operations. In an LLM agent, the model can choose the next operation based on the request and observations. The exercise uses a deterministic mock policy so you can debug the controller before connecting a real model.</p>
+      </section>
+
+      <section aria-labelledby="loop">
+        <h2 id="loop">2. Follow one bounded loop</h2>
+        <pre aria-label="Agent loop pseudocode"><code>repeat, up to the step limit:
+    action = model(request, observations)
+    if action is a valid final answer:
+        return answer
+    validate the requested tool and arguments
+    observation = execute the tool, or report an error
+    add the action and observation to state
+stop with a budget-exhausted result</code></pre>
+        <p>The task takes three model decisions: search, inspect, then finish. Only the first two decisions call tools. Count both decisions and tool calls when measuring cost; a final answer still requires a model decision.</p>
+        <ol>
+          <li><strong>Search:</strong> <code>search_models(task="vision")</code> returns <code>["toy-vit"]</code>.</li>
+          <li><strong>Inspect:</strong> <code>inspect_model(model_id="toy-vit")</code> returns a record with the check “test on held-out image patches.”</li>
+          <li><strong>Finish:</strong> the policy builds an answer from that observation and names its source.</li>
+        </ol>
+        <p>A function name written in a model response does not execute anything by itself. Execution happens only when the controller dispatches a validated call. This separation lets you test tool behavior independently of the model.</p>
+      </section>
+
+      <section aria-labelledby="contract">
+        <h2 id="contract">3. Give tools a clear contract</h2>
+        <p>A tool needs a name, a description, an argument schema, and a predictable result. Our small exercise accepts only two registered functions with named string arguments. A model can request a call using this shape:</p>
+        <pre><code>{
+    "type": "tool",
+    "tool": "inspect_model",
+    "arguments": {"model_id": "toy-vit"}
+}</code></pre>
+        <p>The controller checks the tool name, required argument names, and value types before dispatch. It returns a structured error for an unknown tool or model ID, so the next decision can respond to the failure. An invalid action format stops the run with <code>invalid_action</code>.</p>
+        <p>Use a registry of functions instead of executing model-generated Python. For a real project, also give external calls timeouts and restrict what each tool may read or change. The local exercise uses short in-memory functions, so no network access or file writes are needed.</p>
+      </section>
+
+      <section aria-labelledby="state">
+        <h2 id="state">4. Separate state, memory, and planning</h2>
+        <p><strong>State</strong> is the information available during this run: the task, previous actions, tool observations, and remaining budget. In the exercise it is a Python list. It disappears when the run ends.</p>
+        <p><strong>Persistent memory</strong> is information stored between runs, such as a user preference or a previous investigation. It adds questions about relevance, freshness, and access. Add it only after the short-lived state works correctly.</p>
+        <p><strong>A plan</strong> is a proposed sequence of actions. Tool observations may require the model to change that plan. To evaluate the behavior, record the chosen actions, arguments, observations, and stop reason; you do not need access to a model’s private reasoning.</p>
+        <p>When replacing the mock policy, send the real model the task, tool descriptions, and observed history. Convert its response into the same action dictionary, and keep all validation and budgets in the controller. Parsing the response is not evidence that its answer is correct.</p>
+      </section>
+
+      <section aria-labelledby="reliability">
+        <h2 id="reliability">5. Test success and failure</h2>
+        <p>A loop that terminates may still give an unsupported answer. In particular, the exercise’s <code>finished</code> status means that a final answer was returned; it does not certify correctness. Evaluate the answer separately against the tool observations.</p>
+        <div class="lesson-table-wrap"><table>
+          <thead><tr><th scope="col">Test case</th><th scope="col">Behavior to check</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Normal request</th><td>Two tool calls, a final answer, and a check supported by the inspected record.</td></tr>
+            <tr><th scope="row">No matching record</th><td>Report missing evidence instead of inventing a model.</td></tr>
+            <tr><th scope="row">Unknown tool or bad argument</th><td>Reject the call and record a structured error.</td></tr>
+            <tr><th scope="row">Repeated actions</th><td>Stop when the decision budget is exhausted.</td></tr>
+          </tbody>
+        </table></div>
+        <p>For a real model, also test misleading retrieved text and contradictory evidence. Retrieved documents and tool output are data; they do not grant new permissions. In evaluation, distinguish factual task success, evidence support, tool errors, number of calls, and latency.</p>
+      </section>
+
+      <details class="python-exercise" data-python-exercise data-source="../exercises/llm_agents.py" hidden>
+        <summary>Python exercise · Run a small agent loop</summary>
+        <div class="exercise-body">
+          <p>The controller and tools run as Python. <code>mock_model</code> makes deterministic decisions over fictional records; <strong>no live LLM is called</strong>. This makes the expected trace reproducible and costs nothing in model API usage.</p>
+          <p class="exercise-note">No packages or GPU needed. Browser execution uses <a href="https://pyodide.org/en/stable/usage/webworker.html" target="_blank" rel="noopener noreferrer">Pyodide</a>, loaded only when you press Run. Each run starts fresh. Your code runs in this browser.</p>
+          <label for="python-code">Python code</label>
+          <textarea id="python-code" class="python-editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="python-status" disabled></textarea>
+          <div class="exercise-actions">
+            <button class="button button-dark" data-run disabled>Run Python</button>
+            <button class="button button-outline" data-stop hidden>Stop</button>
+            <button class="button button-outline" data-reset disabled>Reset code</button>
+            <a href="../exercises/llm_agents.py" download>Download original .py ↓</a>
+          </div>
+          <p id="python-status" class="exercise-status" data-status role="status">Open the exercise to load its code.</p>
+          <pre class="exercise-output" data-output aria-label="Python output" tabindex="0">Your output will appear here.</pre>
+          <h3>Expected result</h3>
+          <p>The full output includes observations. Its main events should be:</p>
+          <pre><code>Step 1: search_models
+Step 2: inspect_model
+Step 3: finish
+Status: finished
+Answer: toy-vit: test on held-out image patches. Source: inspect_model.
+Tool calls: 2</code></pre>
+          <h3>Make three changes</h3>
+          <ol>
+            <li>Set <code>TASK = "audio"</code>. Verify that the answer reports missing evidence after one tool call.</li>
+            <li>Restore <code>TASK = "vision"</code> and set <code>MAX_STEPS = 1</code>. Explain why the result is <code>budget_exhausted</code> even though the search succeeded.</li>
+            <li>Restore the budget to 4. In <code>mock_model</code>, replace the first tool name with <code>"unknown_tool"</code>. Verify that no function with that name executes and that the next decision sees an error.</li>
+          </ol>
+          <p><strong>Extension:</strong> write a policy that always requests the same search. Pass it as <code>model</code> to <code>run_agent</code> and verify that the budget still stops it.</p>
+          <p>To run the downloaded original file locally with Python 3.9 or later:</p>
+          <pre><code>python3 llm_agents.py</code></pre>
+        </div>
+      </details>
+
+      <section aria-labelledby="project">
+        <h2 id="project">Take this into the project course</h2>
+        <p>Submit a successful trace, a missing-evidence trace, a rejected call, and a budget stop. For each trace, identify the action, observation, and stopping condition. This is the starting point for experiment bundle D.</p>
+        <p>For the multimodal software assistant, replace the catalog with course documents and add a tool that inspects a screenshot using a vision-capable model. Preserve the image source and its observation in the trace, so you can distinguish visual evidence from a generated explanation.</p>
+        <p>Connect a real LLM through the policy interface only after the controller passes the small tests. Compare a direct model response, a fixed workflow, and your agent on the same tasks, with comparable evidence access and explicit budgets. Report task success and cost alongside at least one failure analysis.</p>
+        <p><strong>Exit check:</strong> point to the exact line that executes a tool, the place where its observation enters state, and the rule that stops a repeating policy. Explain what would change if the policy were a live LLM.</p>
+      </section>
+
+      <section aria-labelledby="reading">
+        <h2 id="reading">Read with a purpose</h2>
+        <ul>
+          <li><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">ReAct: Synergizing Reasoning and Acting in Language Models</a> — identify where external observations influence the next action.</li>
+          <li><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener noreferrer">Building effective agents</a> — read the distinction between workflows and agents and the guidance on tool interfaces. This is a conceptual reading, not a current API tutorial.</li>
+        </ul>
+      </section>
+    </article>
+    <nav class="lesson-next" aria-label="Lesson navigation"><a href="transformer-fundamentals.html">← Transformer fundamentals</a><a href="../index.html#projects">Explore the projects →</a></nav>
+  </main>
+  <footer class="lesson-footer">HUST · School of Software Engineering · VIBE Course Studio</footer>
+</body>
+</html>

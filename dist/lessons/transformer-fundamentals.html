@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#233b35">
+  <meta name="description" content="Learn attention, causal masks, and Transformer blocks across language and vision, with a small runnable Python exercise.">
+  <title>Transformer fundamentals · VIBE Course Studio</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="lesson.css">
+  <script type="module" src="lesson.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="lesson-header"><div class="lesson-header-inner">
+    <a class="brand" href="../index.html" aria-label="VIBE Course Studio home"><img src="../assets/favicon.svg" width="32" height="32" alt=""><span>VIBE<span class="brand-sub">COURSE STUDIO</span></span></a>
+    <a class="lesson-home" href="../index.html#syllabus">← All lessons</a>
+  </div></header>
+  <main id="main" class="lesson-document">
+    <article>
+      <header>
+        <p class="eyebrow">STUDY GUIDE 01 · TRANSFORMERS</p>
+        <h1>Transformer<br><em>fundamentals.</em></h1>
+        <p class="lesson-lead">Turn a sequence of vectors into a sequence that uses context. Start with one attention head, then see how it fits into a model for text or images.</p>
+        <p class="lesson-meta-line">Companion to lessons 03–06 · Bridge to lessons 07–08<br>Prerequisites: Python lists, vectors, dot products, and matrix multiplication</p>
+      </header>
+
+      <section aria-labelledby="goals">
+        <h2 id="goals">What you will learn</h2>
+        <p>After this guide, you should be able to calculate a small attention matrix, explain a causal mask, and trace the data through a Transformer block. You should also be able to explain what changes when the input is a sequence of image patches.</p>
+        <div class="lesson-callout"><strong>Start with a concrete task.</strong> A language model reads “the cat sat” and predicts the next token. At the “sat” position, attention can combine information from earlier tokens. A Vision Transformer performs a similar calculation over patch vectors from an image.</div>
+      </section>
+
+      <section aria-labelledby="vectors">
+        <h2 id="vectors">1. Represent the input</h2>
+        <p>Write the input as a matrix <code>X</code> with one row per position. For <code>n</code> positions and <code>d_model</code> features, its shape is <code>[n, d_model]</code>. We omit the batch dimension here to make each calculation visible.</p>
+        <p>For text, a tokenizer produces token IDs and an embedding table maps them to vectors. For images, divide the image into patches, flatten each patch, and apply a learned linear projection. Neither kind of input arrives with useful semantic vectors for free: the embedding or projection is learned.</p>
+        <p>For example, a 32 × 32 RGB image divided into 8 × 8 patches produces 16 patches. Each flattened patch contains 192 numbers. A projection from 192 to 64 features gives a <code>[16, 64]</code> sequence before adding any classification token.</p>
+      </section>
+
+      <section aria-labelledby="attention">
+        <h2 id="attention">2. Calculate one attention head</h2>
+        <p>Each position supplies a query, a key, and a value. A query is compared with every visible key; the resulting weights determine how to combine the values. The three projections are learned separately.</p>
+        <pre aria-label="Scaled dot-product attention equations"><code>Q = X W_Q                 [n, d_k]
+K = X W_K                 [n, d_k]
+V = X W_V                 [n, d_v]
+
+S = Q Kᵀ / √d_k           [n, n]
+A = softmax(S + mask)     [n, n]   softmax along each row
+O = A V                   [n, d_v]</code></pre>
+        <p>The dot product measures compatibility between a query and a key. Dividing by <code>√d_k</code> helps control the scale of the scores. Softmax turns each row into nonnegative weights that sum to one. Finally, matrix multiplication with <code>V</code> mixes the information at different positions.</p>
+        <h3>A calculation you can check by hand</h3>
+        <p>Take a query <code>q = [0, 1]</code>, two visible keys <code>[1, 0]</code> and <code>[0, 1]</code>, and values <code>[2, 0]</code> and <code>[0, 1]</code>. The scaled scores are <code>[0, 0.707]</code>. Softmax gives approximately <code>[0.330, 0.670]</code>, so the output is <code>0.330 × [2, 0] + 0.670 × [0, 1] = [0.660, 0.670]</code>.</p>
+        <p>Keep the two outputs distinct: <code>A</code> contains weights over positions, while <code>O</code> contains new feature vectors. Attention weights are not vocabulary probabilities and, by themselves, do not establish why a model made a prediction.</p>
+      </section>
+
+      <section aria-labelledby="mask">
+        <h2 id="mask">3. Control what each position sees</h2>
+        <p>A next-token language model must not read future tokens while learning to predict them. For row <code>i</code>, set the score at column <code>j</code> to negative infinity whenever <code>j &gt; i</code>. Apply this mask <strong>before softmax</strong>; those positions then receive exactly zero weight.</p>
+        <pre aria-label="Causal attention visibility"><code>             key 0   key 1   key 2
+query 0        ✓       —       —
+query 1        ✓       ✓       —
+query 2        ✓       ✓       ✓</code></pre>
+        <p>The current token remains visible because the training target at that position is the next token. A padding mask serves a different purpose: it hides artificial padding positions. For ordinary image classification, a Vision Transformer usually allows every patch to attend to every other patch.</p>
+        <p><strong>Check your understanding:</strong> if you change the last input vector, which earlier outputs may change? With causal attention, none of them should change. Without the causal mask, they may change.</p>
+      </section>
+
+      <section aria-labelledby="block">
+        <h2 id="block">4. Build a Transformer block</h2>
+        <p>One head is only part of a Transformer. Multiple heads use separate projections to mix information in different feature spaces. Concatenate their outputs, then project the result back to <code>d_model</code> features so it can be added to the input.</p>
+        <pre aria-label="A pre-normalization Transformer block"><code>H = X + MultiHeadAttention(LayerNorm(X))
+Y = H + FeedForward(LayerNorm(H))</code></pre>
+        <p>This is a common <em>pre-normalization</em> layout; the original Transformer used a different normalization order. Layer normalization rescales features within each position. Residual additions preserve a direct path through the block. The feed-forward network applies the same small nonlinear network to each position independently.</p>
+        <p>Attention exchanges information between positions; the feed-forward network transforms features within a position. Stacking these blocks builds depth. Positional information is also needed: attention alone does not know which row came first. Models can add position embeddings or encode relative position inside the attention calculation.</p>
+        <p>For a concrete shape check, let <code>d_model = 64</code> and use four heads with <code>d_k = d_v = 16</code>. Each head outputs <code>[n, 16]</code>; concatenation gives <code>[n, 64]</code>. Doubling the sequence length makes the number of entries in each dense attention matrix four times larger.</p>
+      </section>
+
+      <section aria-labelledby="modalities">
+        <h2 id="modalities">5. Use the block for language and vision</h2>
+        <div class="lesson-table-wrap"><table>
+          <caption class="exercise-note">Two common uses of the same basic architecture</caption>
+          <thead><tr><th scope="col">Choice</th><th scope="col">Next-token language model</th><th scope="col">Vision Transformer classifier</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Input</th><td>Token embeddings</td><td>Projected image patches</td></tr>
+            <tr><th scope="row">Visibility</th><td>Causal attention</td><td>Typically all patches visible</td></tr>
+            <tr><th scope="row">Output head</th><td>Vocabulary logits at each position</td><td>Class logits from a classification token or pooled features</td></tr>
+            <tr><th scope="row">Example objective</th><td>Cross-entropy against the next token</td><td>Cross-entropy against an image label</td></tr>
+          </tbody>
+        </table></div>
+        <p>These are two configurations, not a rule that every text or vision model must follow. For example, visual generation uses other objectives. Separate the input representation, attention visibility, output head, and training objective when comparing architectures.</p>
+      </section>
+
+      <details class="python-exercise" data-python-exercise data-source="../exercises/transformer_fundamentals.py" hidden>
+        <summary>Python exercise · Calculate and test attention</summary>
+        <div class="exercise-body">
+          <p>Run a single attention head over three hand-chosen vectors. Then change the mask and inputs to test your predictions. This exercise computes a forward pass; it does not train a model or implement a complete Transformer.</p>
+          <p class="exercise-note">No packages or GPU needed. Browser execution uses <a href="https://pyodide.org/en/stable/usage/webworker.html" target="_blank" rel="noopener noreferrer">Pyodide</a>, loaded only when you press Run. Each run starts fresh. Your code runs in this browser.</p>
+          <label for="python-code">Python code</label>
+          <textarea id="python-code" class="python-editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="python-status" disabled></textarea>
+          <div class="exercise-actions">
+            <button class="button button-dark" data-run disabled>Run Python</button>
+            <button class="button button-outline" data-stop hidden>Stop</button>
+            <button class="button button-outline" data-reset disabled>Reset code</button>
+            <a href="../exercises/transformer_fundamentals.py" download>Download original .py ↓</a>
+          </div>
+          <p id="python-status" class="exercise-status" data-status role="status">Open the exercise to load its code.</p>
+          <pre class="exercise-output" data-output aria-label="Python output" tabindex="0">Your output will appear here.</pre>
+          <h3>Expected result</h3>
+          <pre><code>Attention weights (3 x 3):
+  [1.000, 0.000, 0.000]
+  [0.330, 0.670, 0.000]
+  [0.248, 0.248, 0.503]
+Output vectors (3 x 2):
+  [2.000, 0.000]
+  [0.660, 0.670]
+  [1.503, 0.752]</code></pre>
+          <p class="exercise-note">Displayed values are rounded; the unrounded attention rows sum to one.</p>
+          <h3>Make three changes</h3>
+          <ol>
+            <li>Set <code>CAUSAL = False</code>. Predict which zero entries will disappear, then run the code.</li>
+            <li>Restore the causal mask and change only the last row of <code>X</code> to <code>[4.0, -2.0]</code>. Verify that the first two output vectors remain unchanged. Repeat without the mask.</li>
+            <li>Restore the original input and set every row of <code>W_V</code> to zero. Explain why the attention weights stay the same while every output vector becomes zero.</li>
+          </ol>
+          <p>To run the downloaded original file locally with Python 3.9 or later:</p>
+          <pre><code>python3 transformer_fundamentals.py</code></pre>
+        </div>
+      </details>
+
+      <section aria-labelledby="project">
+        <h2 id="project">Take this into the project course</h2>
+        <p>Submit the attention matrices with and without a causal mask, one hand-calculated output vector, and your explanation of the future-token test. These are the first evidence items for experiment bundle A.</p>
+        <p>In bundle B, reuse this understanding when implementing a small Transformer block with automatic differentiation. Add a language-model head for text and a classification head for image patches. In the final multimodal agent, distinguish the model that encodes images from the controller that chooses tools.</p>
+        <p><strong>Exit check:</strong> explain why an attention matrix can have shape <code>[16, 16]</code> while its output has shape <code>[16, 64]</code>. Then explain why changing the mask does not change either shape.</p>
+      </section>
+
+      <section aria-labelledby="reading">
+        <h2 id="reading">Read with a purpose</h2>
+        <ul>
+          <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Attention Is All You Need</a> — compare Figure 1 and Section 3.2 with the block and attention equations above.</li>
+          <li><a href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener noreferrer">An Image Is Worth 16×16 Words</a> — trace how image patches become the input sequence in Figure 1.</li>
+        </ul>
+      </section>
+    </article>
+    <nav class="lesson-next" aria-label="Lesson navigation"><a href="../index.html#syllabus">← Back to the syllabus</a><a href="llm-agents.html">Next: LLM agents →</a></nav>
+  </main>
+  <footer class="lesson-footer">HUST · School of Software Engineering · VIBE Course Studio</footer>
+</body>
+</html>

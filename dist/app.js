@@ -84,8 +84,10 @@ const dialog = $('#lesson-dialog');
 function showLesson(id) {
   currentLesson = id;
   const lesson = lessons.find(item => item.id === id);
+  const studyGuide = id >= 3 && id <= 6 ? 'transformer-fundamentals' : id >= 12 && id <= 15 ? 'llm-agents' : null;
   $('#dialog-eyebrow').textContent = `LESSON ${padded(id)} / ${tracks[lesson.track].label.toUpperCase()} / ${lesson.hours} HOURS`;
   $('#dialog-content').innerHTML = `<h2 id="dialog-title">${lesson.title}</h2><p>${lesson.description}</p>
+    ${studyGuide ? `<div class="dialog-section"><a href="lessons/${studyGuide}.html">Open the detailed study guide →</a></div>` : ''}
     <div class="dialog-section"><h3>The essential idea</h3><p>${lesson.concept}</p></div>
     <div class="dialog-section"><h3>After this lesson, you can</h3><ul>${lesson.objectives.map(item => `<li>${item}</li>`).join('')}</ul></div>
     <div class="dialog-section"><h3>Put it into practice</h3><p>${lesson.practice}</p><span class="dialog-lab">${lesson.lab}</span></div>

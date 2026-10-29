@@ -3,25 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#233b35">
+  <meta name="theme-color" content="#9e2837">
   <meta name="description" content="Learn how an LLM agent selects tools, uses observations, and stops. Run a small Python agent loop with a mock model and real tools.">
-  <title>LLM agents · VIBE Course Studio</title>
-  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../styles.css?v=52bd87d">
-  <link rel="stylesheet" href="lesson.css">
-  <script type="module" src="lesson.js"></script>
+  <title>LLM agents · VIBE Courses</title>
+  <link rel="icon" href="../assets/favicon.svg?v=academic-1" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css?v=academic-1">
+  <link rel="stylesheet" href="lesson.css?v=academic-1">
+  <script type="module" src="lesson.js?v=academic-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="lesson-header"><div class="lesson-header-inner">
-    <a class="brand" href="../index.html" aria-label="VIBE Course Studio home"><img src="../assets/favicon.svg" width="32" height="32" alt=""><span>VIBE<span class="brand-sub">COURSE STUDIO</span></span></a>
-    <a class="lesson-home" href="../index.html#syllabus">← All lessons</a>
-  </div></header>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../index.html" aria-label="VIBE courses home"><img src="../assets/favicon.svg?v=academic-1" alt="" width="34" height="34"><span>VIBE<span class="brand-sub">HUST · Software Engineering</span></span></a>
+      <a class="header-source" href="https://github.com/vibe-hust/llm_lesson" target="_blank" rel="noopener noreferrer">Course repository ↗</a>
+    </div>
+  </header>
+  <nav class="course-nav" aria-label="Main navigation"><div class="wrap">
+    <a href="../index.html#courses">Overview</a><a href="../index.html#lessons" aria-current="page">Lesson notes</a><a href="../index.html#syllabus">Syllabus</a><a href="../index.html#projects">Projects</a><a href="../index.html#assessment">Assessment</a><a href="../index.html#resources">Resources</a>
+  </div></nav>
+  <div class="lesson-layout wrap">
+    <aside class="lesson-toc"><nav aria-label="On this page"><h2>On this page</h2><a href="#goals">Learning goals</a><a href="#parts">System components</a><a href="#loop">The agent loop</a><a href="#contract">Tool contracts</a><a href="#state">State and memory</a><a href="#reliability">Evaluation</a><a href="#project">Project connection</a><a href="#reading">Further reading</a></nav></aside>
   <main id="main" class="lesson-document">
     <article>
       <header>
-        <p class="eyebrow">STUDY GUIDE 02 · LLM AGENTS</p>
-        <h1>From a model<br>to <em>an agent.</em></h1>
+        <p class="eyebrow">Lesson notes / LLM agents</p>
+        <h1>LLM agents: tools, state, and control</h1>
         <p class="lesson-lead">Give a model a task, a few tools, and a way to observe the results. Keep the loop small enough to trace, test, and stop.</p>
         <p class="lesson-meta-line">Companion to lessons 12–15 · Experiment bundle D<br>Prerequisites: Python functions, dictionaries, loops, and basic model inference</p>
       </header>
@@ -155,6 +162,7 @@ Tool calls: 2</code></pre>
     </article>
     <nav class="lesson-next" aria-label="Lesson navigation"><a href="transformer-fundamentals.html">← Transformer fundamentals</a><a href="../index.html#projects">Explore the projects →</a></nav>
   </main>
-  <footer class="lesson-footer">HUST · School of Software Engineering · VIBE Course Studio</footer>
+  </div>
+  <footer class="lesson-footer">HUST · School of Software Engineering · VIBE Courses</footer>
 </body>
 </html>

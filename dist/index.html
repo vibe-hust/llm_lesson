@@ -3,81 +3,96 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#233b35">
-  <meta name="description" content="A connected course in Transformers, language and vision foundation models, and LLM agents. Explore the HUST VIBE Lab syllabus, interactive examples, and practical projects.">
-  <meta property="og:title" content="From attention to intelligent action · VIBE Course Studio">
-  <meta property="og:description" content="Two connected courses. Understand the models. Build and evaluate an agent.">
+  <meta name="theme-color" content="#9e2837">
+  <meta name="description" content="Two connected HUST courses on Transformers, language and vision foundation models, and LLM agents. Lesson notes, Python exercises, syllabus, and projects.">
+  <meta property="og:title" content="Foundation Models & AI Agents · HUST">
+  <meta property="og:description" content="Course information, lesson notes, and projects for second-year software engineering students.">
   <meta property="og:type" content="website">
-  <title>Foundation Models & Agents · VIBE Course Studio</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=52bd87d">
-  <script type="module" src="app.js"></script>
+  <title>Foundation Models & AI Agents · HUST</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=academic-1">
+  <link rel="stylesheet" href="styles.css?v=academic-1">
+  <script type="module" src="app.js?v=academic-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="#" aria-label="VIBE Course Studio home"><img src="assets/favicon.svg" alt="" width="37" height="37"><span>VIBE<span class="brand-sub">COURSE STUDIO</span></span></a>
-      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="main-nav"><span></span><span></span></button>
-      <nav id="main-nav" aria-label="Main navigation">
-        <a href="#courses">The courses</a><a href="#syllabus">Syllabus</a><a href="#studio">Interactive studio</a><a href="#projects">Projects</a><a href="#resources">Resources</a>
-      </nav>
-      <a class="header-source" href="https://github.com/vibe-hust/llm_lesson" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="VIBE courses home"><img src="assets/favicon.svg?v=academic-1" alt="" width="34" height="34"><span>VIBE<span class="brand-sub">HUST · Software Engineering</span></span></a>
+      <a class="header-source" href="https://github.com/vibe-hust/llm_lesson" target="_blank" rel="noopener noreferrer">Course repository ↗</a>
     </div>
   </header>
-  <main id="main">
-    <section class="hero wrap" aria-labelledby="hero-heading">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot"></span> HUST · SCHOOL OF SOFTWARE ENGINEERING</p>
-        <h1 id="hero-heading">From attention<br>to <em>intelligent</em><br>action.</h1>
-        <p class="hero-description">Understand the models that read, see, and generate. Then build an agent that puts them to work.</p>
-        <div class="hero-actions"><a class="button button-dark" href="#syllabus">Explore the syllabus <span aria-hidden="true">↗</span></a><a class="text-link" href="#studio">Try an interactive lesson <span aria-hidden="true">→</span></a></div>
-        <p class="hero-note"><span class="small-pill">DRAFT SYLLABUS</span> Second-year undergraduates · Spring semester</p>
-      </div>
-      <div class="hero-visual">
-        <div class="figure-caption"><span>FIG. 01 / CONNECT THE IDEAS</span><span class="live-label"><span></span> EXPLORE</span></div>
-        <div class="model-diagram">
-          <div class="diagram-tabs" role="tablist" aria-label="Explore a model pathway">
-            <button id="path-language" role="tab" aria-selected="true" aria-controls="path-panel" data-path="language">Language</button>
-            <button id="path-vision" role="tab" aria-selected="false" tabindex="-1" aria-controls="path-panel" data-path="vision">Vision</button>
-            <button id="path-agent" role="tab" aria-selected="false" tabindex="-1" aria-controls="path-panel" data-path="agent">Agent</button>
-          </div>
-          <div id="path-panel" role="tabpanel" aria-labelledby="path-language" tabindex="0">
-            <div class="diagram-step"><span class="step-index">01</span><span id="input-caption">Represent the input</span><span id="input-type">TEXT TOKENS</span></div>
-            <div class="input-sequence" id="diagram-input"><span>The</span><span>model</span><span>learns</span><span>to</span><span>…</span></div>
-            <svg class="attention-lines" viewBox="0 0 420 76" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M45 2 210 74M128 2 210 74M210 2V74M292 2 210 74M375 2 210 74"/><path d="M45 2 128 74M128 2 292 74M210 2 45 74M292 2 375 74M375 2 45 74" opacity=".3"/></g><g fill="currentColor"><circle cx="45" cy="2" r="3"/><circle cx="128" cy="2" r="3"/><circle cx="210" cy="2" r="3"/><circle cx="292" cy="2" r="3"/><circle cx="375" cy="2" r="3"/></g></svg>
-            <div class="transformer-stack"><div class="stack-back"></div><div class="stack-mid"></div><div class="stack-front"><span class="stack-symbol" aria-hidden="true">✳</span><div><span id="model-label">Transformer</span><small id="model-description">Attention + feed-forward layers</small></div><span class="stack-badge" id="model-badge">× N</span></div></div>
-            <div class="diagram-connector" aria-hidden="true"><span></span>↓</div>
-            <div class="diagram-step"><span class="step-index">02</span><span id="output-caption">Read the output</span><span id="output-type">NEXT-TOKEN PREDICTION</span></div>
-            <div class="diagram-output" id="diagram-output"><span>create</span><div class="probability-bar"><i></i></div><span class="output-label">illustrative output</span></div>
-          </div>
+  <nav class="course-nav" aria-label="Main navigation"><div class="wrap">
+    <a href="#courses">Overview</a><a href="#lessons">Lesson notes</a><a href="#syllabus">Syllabus</a><a href="#projects">Projects</a><a href="#assessment">Assessment</a><a href="#resources">Resources</a>
+  </div></nav>
+  <main id="main" class="wrap">
+    <section id="courses" class="course-overview" aria-labelledby="course-title">
+      <p class="eyebrow">School of Software Engineering · Huazhong University of Science and Technology</p>
+      <h1 id="course-title">Foundation Models &amp; AI Agents</h1>
+      <p class="course-subtitle">Second-year undergraduate courses · Spring semester</p>
+      <div class="overview-grid">
+        <div>
+          <p>Study the principles behind models that process language and images, then build an agent that uses models, tools, and evidence to complete a task.</p>
+          <p>The two courses share a learning sequence: representations → Transformers → language and vision models → LLM agents. Each theory lesson connects to a practical exercise and a project deliverable.</p>
+          <div class="overview-links"><a href="#lessons">Read the lesson notes →</a><a href="syllabus.md" download>Download the syllabus ↓</a></div>
         </div>
-        <div class="figure-foot"><span>Architecture → capability → application</span><span aria-hidden="true">↗</span></div>
+        <dl class="course-information">
+          <div><dt>Theory course</dt><dd>32 hours · proposed</dd></div>
+          <div><dt>Project course</dt><dd>2 weeks · proposed</dd></div>
+          <div><dt>Prerequisites</dt><dd>Basic programming and linear algebra</dd></div>
+          <div><dt>Course status</dt><dd>Draft syllabus</dd></div>
+        </dl>
       </div>
-    </section>
-    <div class="course-facts wrap" aria-label="Proposed course at a glance">
-      <div><strong>12<span>h</span></strong><span>Transformer core</span></div><div><strong>08<span>h</span></strong><span>LLM agent principles</span></div><div><strong>16</strong><span>Connected lessons</span></div><div><strong>02</strong><span>Complementary courses</span></div>
-    </div>
-    <section id="courses" class="section wrap courses-section">
-      <div class="section-intro"><p class="eyebrow">01 / THE COURSE PAIR</p><h2>Learn the mechanism.<br><em>Build the system.</em></h2><p>Follow the same ideas from a small numerical example to a working application. Every topic has a practical task and something you can verify.</p><a class="text-link" href="syllabus.md" download>Download the full syllabus <span aria-hidden="true">↓</span></a></div>
       <div class="course-pair">
-        <article class="course-detail"><div class="course-detail-top"><span class="mono">COURSE 01</span><span class="small-pill">32 HOURS · PROPOSED</span></div><h3>Core Principles & Frontier Applications of Large Models</h3><p>Understand Transformers across language and vision. Study how models learn, generate, and become part of an agent.</p><div class="course-topics"><span>Architecture</span><span>Learning</span><span>Language + vision</span></div></article>
-        <article class="course-detail"><div class="course-detail-top"><span class="mono">COURSE 02</span><span class="small-pill">2 WEEKS · PROPOSED</span></div><h3>Large Models & AI Agents:<br>Project Design</h3><p>Turn the theory into a system that perceives, retrieves, uses tools, and checks its results. Explain both its successes and its failures.</p><div class="course-topics"><span>Implementation</span><span>Integration</span><span>Evaluation</span></div></article>
-        <p class="planning-note">Planning basis: basic programming and elementary linear algebra, with Python and tensor exercises for preparation. Credits, dates, and final teaching arrangements are to be confirmed.</p>
+        <article class="course-detail"><p class="course-label">Course 01 · Theory</p><h2>Core Principles &amp; Frontier Applications of Large Models</h2><p>Representations, attention, Transformer blocks, language and vision models, adaptation, and agent principles.</p></article>
+        <article class="course-detail"><p class="course-label">Course 02 · Practice</p><h2>Large Models &amp; AI Agents: Project Design</h2><p>Individual experiments followed by a team project that combines perception, retrieval, tool use, and evaluation.</p></article>
+      </div>
+      <p class="planning-note">Teaching hours and project duration are planning assumptions. Credits, dates, and final teaching arrangements remain to be confirmed.</p>
+    </section>
+
+    <section id="lessons" class="section" aria-labelledby="notes-title">
+      <div class="section-heading"><h2 id="notes-title">Lesson notes</h2><span class="section-note">Start here</span></div>
+      <p>Detailed explanations, worked examples, and practical tasks for the first two study guides.</p>
+      <div class="study-guides">
+        <article class="study-guide"><span class="guide-number">01</span><div><h3><a href="lessons/transformer-fundamentals.html">Transformer fundamentals</a></h3><p>Queries, keys, values, causal masks, and Transformer blocks for language and vision.</p><span class="guide-meta">Lessons 03–06 · Preparation for experiments A &amp; B</span></div><a class="guide-link" href="lessons/transformer-fundamentals.html" aria-label="Read Transformer fundamentals">Read lesson →</a></article>
+        <article class="study-guide"><span class="guide-number">02</span><div><h3><a href="lessons/llm-agents.html">LLM agents</a></h3><p>Tool contracts, working state, bounded execution, and testing success and failure.</p><span class="guide-meta">Lessons 12–15 · Preparation for experiment D</span></div><a class="guide-link" href="lessons/llm-agents.html" aria-label="Read LLM agents">Read lesson →</a></article>
       </div>
     </section>
-    <section id="syllabus" class="section syllabus-section">
-      <div class="wrap">
-        <div class="section-heading"><div><p class="eyebrow">02 / THE LEARNING PATH</p><h2>Sixteen lessons.<br><em>One connected sequence.</em></h2></div><p>Start with representations. Build the Transformer. Explore language and vision. Give an LLM tools, then test what it can do.</p></div>
-        <div class="syllabus-toolbar"><div class="filter-group" role="group" aria-label="Filter lessons by topic"><button class="filter active" data-filter="all" aria-pressed="true">All lessons <span>16</span></button><button class="filter" data-filter="foundations" aria-pressed="false">Foundations <span>4</span></button><button class="filter" data-filter="transformer" aria-pressed="false">Transformers <span>6</span></button><button class="filter" data-filter="vision" aria-pressed="false">Vision & multimodal <span>2</span></button><button class="filter" data-filter="agents" aria-pressed="false">LLM agents <span>4</span></button></div><span class="lesson-count" id="lesson-count" aria-live="polite">16 lessons · 32 teaching hours</span></div>
-        <div class="lesson-grid" id="lesson-grid"></div>
-        <noscript><p>The lesson explorer needs JavaScript. Read the complete <a href="syllabus.md">downloadable syllabus</a> for all lessons, exercises, and assessment details.</p></noscript>
-        <div class="path-note"><span aria-hidden="true">↳</span><p><strong>The same block, two applications.</strong> Build a miniature language model and a small Vision Transformer before connecting pretrained models to an agent.</p></div>
-        <div class="full-lesson-links" aria-label="Detailed lesson pages"><span>STUDY GUIDES</span><a href="lessons/transformer-fundamentals.html">Transformer fundamentals →</a><a href="lessons/llm-agents.html">LLM agents →</a></div>
-      </div>
+
+    <section id="syllabus" class="section" aria-labelledby="syllabus-title">
+      <div class="section-heading"><h2 id="syllabus-title">Syllabus: theory and practice</h2><span class="section-note">16 lessons · 2 hours each</span></div>
+      <p>Read across each row to connect a concept with its practical task. Select a lesson title for objectives, evidence to submit, and readings.</p>
+      <div class="syllabus-toolbar"><div class="filter-group" role="group" aria-label="Filter lessons by topic"><button class="filter active" data-filter="all" aria-pressed="true">All lessons</button><button class="filter" data-filter="foundations" aria-pressed="false">Foundations</button><button class="filter" data-filter="transformer" aria-pressed="false">Transformers</button><button class="filter" data-filter="vision" aria-pressed="false">Vision &amp; multimodal</button><button class="filter" data-filter="agents" aria-pressed="false">LLM agents</button></div><p id="lesson-count" class="section-note" aria-live="polite">16 lessons · 32 teaching hours</p></div>
+      <table class="syllabus-table"><caption class="sr-only">Theory lessons and the corresponding practical work</caption><thead><tr><th scope="col">Lesson</th><th scope="col">Theory</th><th scope="col">Project preparation</th></tr></thead><tbody id="lesson-grid"></tbody></table>
+      <noscript><p>Read the complete <a href="syllabus.md">downloadable syllabus</a> for all lessons, exercises, and assessment details.</p></noscript>
+      <p class="section-note syllabus-note">Teaching allocation: foundations and evaluation 8h · Transformer core 12h · visual generation and multimodal learning 4h · LLM agents 8h.</p>
     </section>
-    <section id="studio" class="section studio-section">
-      <div class="wrap"><div class="section-heading"><div><p class="eyebrow">03 / THE INTERACTIVE STUDIO</p><h2>A little less abstract.<br><em>A little more hands-on.</em></h2></div><p>Two small examples to explore before opening a notebook. Change an attention pattern, then step through an agent’s actions.</p></div>
+
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <div class="section-heading"><h2 id="projects-title">Course design projects</h2><span class="section-note">Teams of about three</span></div>
+      <p>Complete the individual experiments during the semester. Use the two-week project course to integrate components and evaluate one application.</p>
+      <div class="project-tabs" role="tablist" aria-label="Explore project tracks"><button id="project-software" role="tab" aria-selected="true" aria-controls="project-panel" data-project="software">Software assistant</button><button id="project-knowledge" role="tab" aria-selected="false" tabindex="-1" aria-controls="project-panel" data-project="knowledge">Visual knowledge</button><button id="project-creation" role="tab" aria-selected="false" tabindex="-1" aria-controls="project-panel" data-project="creation">Visual creation</button></div>
+      <div id="project-panel" class="project-panel" role="tabpanel" aria-labelledby="project-software" tabindex="0"></div>
+      <h3 class="subsection-title">Suggested project schedule</h3>
+      <ol id="milestones" class="project-timeline"></ol>
+    </section>
+
+    <section id="assessment" class="section" aria-labelledby="assessment-title">
+      <div class="section-heading"><h2 id="assessment-title">Assessment</h2><span class="section-note">Proposed weighting</span></div>
+      <div class="assessment-grid">
+        <article><h3>Theory course</h3><table class="grade-table"><caption class="sr-only">Theory course grading</caption><tbody><tr><th scope="row">Individual experiments</th><td>30%</td></tr><tr><th scope="row">Quizzes</th><td>20%</td></tr><tr><th scope="row">Final assessment</th><td>50%</td></tr></tbody></table></article>
+        <article><h3>Project course</h3><table class="grade-table"><caption class="sr-only">Project course grading</caption><tbody><tr><th scope="row">System implementation</th><td>25%</td></tr><tr><th scope="row">Experiments &amp; failure analysis</th><td>25%</td></tr><tr><th scope="row">Engineering &amp; reproducibility</th><td>15%</td></tr><tr><th scope="row">Individual defense &amp; live modification</th><td>35%</td></tr></tbody></table></article>
+      </div>
+      <p class="assessment-note">Each student explains an architecture, traces an agent’s actions, and makes a small code change. AI coding assistance is welcome with disclosure; students remain responsible for their code and evidence.</p>
+    </section>
+
+    <section id="resources" class="section" aria-labelledby="resources-title">
+      <div class="section-heading"><h2 id="resources-title">Readings and resources</h2><a href="syllabus.md" download>Full syllabus ↓</a></div>
+      <p>Start with the assigned concepts and diagrams. Full paper derivations are extension material.</p>
+      <div class="resource-grid" id="resource-grid"></div><button class="button button-outline resource-toggle" id="resource-toggle" aria-expanded="false" aria-controls="resource-grid">Show all 12 resources</button>
+    </section>
+
+    <section class="section examples-section" aria-label="Optional interactive examples">
+      <details id="studio" class="examples-disclosure"><summary>Interactive examples: attention and the agent loop</summary><p class="examples-intro">Explore attention weights and a scripted agent trace. The detailed lesson pages explain the calculations and implementation.</p>
       <div class="studio-grid">
         <article class="experiment attention-experiment"><div class="experiment-top"><span class="mono">EXPERIMENT 01</span><span class="mini-tag">TRANSFORMERS</span></div><h3>Where does attention go?</h3><p>Select a query and change its visibility. Each row sums to one across the positions it can see.</p>
           <div class="experiment-controls"><div class="segmented" role="group" aria-label="Attention input type"><button data-example="text" aria-pressed="true" class="active">Text tokens</button><button data-example="vision" aria-pressed="false">Image patches</button></div><label class="toggle-label"><input id="causal-toggle" type="checkbox" checked><span class="toggle-track" aria-hidden="true"></span>Causal mask</label></div>
@@ -90,19 +105,11 @@
           <div class="agent-log" id="agent-log" role="log" aria-live="polite"><div class="agent-empty"><span aria-hidden="true">↳</span><p>The task is ready.<br>Run the first step to inspect the workflow.</p></div></div>
           <div class="agent-actions"><button class="button button-dark" id="agent-next">Run first step <span aria-hidden="true">→</span></button><button class="reset-button" id="agent-reset" disabled>Reset</button><span id="agent-progress">0 / 5</span></div><p class="demo-note">Scripted teaching walkthrough. No live LLM is running here; the full project uses a model to select actions.</p><a class="text-link studio-lesson-link" href="lessons/llm-agents.html">Read the full lesson →</a>
         </article>
-      </div></div>
+      </div>
+      </details>
     </section>
-    <section id="projects" class="section wrap project-section">
-      <div class="section-heading"><div><p class="eyebrow">04 / THE PROJECT COURSE</p><h2>Build something.<br><em>Prove that it works.</em></h2></div><p>Complete the shared experiments, then work in a team of about three on one integration project. Use a controlled task set to evaluate the result.</p></div>
-      <div class="project-tabs" role="tablist" aria-label="Explore project tracks"><button id="project-software" role="tab" aria-selected="true" aria-controls="project-panel" data-project="software"><span>01</span> Software assistant</button><button id="project-knowledge" role="tab" aria-selected="false" tabindex="-1" aria-controls="project-panel" data-project="knowledge"><span>02</span> Visual knowledge</button><button id="project-creation" role="tab" aria-selected="false" tabindex="-1" aria-controls="project-panel" data-project="creation"><span>03</span> Visual creation</button></div>
-      <div id="project-panel" class="project-panel" role="tabpanel" aria-labelledby="project-software" tabindex="0"></div>
-      <div class="project-timeline"><div class="timeline-intro"><p class="eyebrow">TEN DAYS, STEP BY STEP</p><h3>From a baseline<br>to a defensible result.</h3><p>Individual experiments take place during the semester. The project course is for integration, testing, and explanation.</p></div><ol id="milestones"></ol></div>
-    </section>
-    <section class="section assessment-section" id="assessment"><div class="wrap assessment-grid"><div><p class="eyebrow">05 / WHAT COUNTS</p><h2>Understand it.<br><em>Explain your choices.</em></h2><p>Assessment rewards working systems and the people who understand them. Each student explains an architecture, traces an agent’s actions, and makes a small live code change.</p><p class="assessment-note">AI coding assistance is welcome with disclosure. You remain responsible for the code and the evidence you submit.</p></div><div class="assessment-breakdowns"><article><h3>Theory course</h3><div class="grade-row"><span>Individual experiments</span><strong>30%</strong></div><div class="grade-row"><span>Quizzes</span><strong>20%</strong></div><div class="grade-row"><span>Final assessment</span><strong>50%</strong></div></article><article><h3>Project course</h3><div class="grade-row"><span>System implementation</span><strong>25%</strong></div><div class="grade-row"><span>Experiments & failure analysis</span><strong>25%</strong></div><div class="grade-row"><span>Engineering & reproducibility</span><strong>15%</strong></div><div class="grade-row emphasized"><span>Individual defense & live modification</span><strong>35%</strong></div></article></div></div></section>
-    <section id="resources" class="section wrap resources-section"><div class="section-heading"><div><p class="eyebrow">06 / THE READING SHELF</p><h2>Go to <em>the source.</em></h2></div><p>Selected papers and tutorials, read with a purpose. Start with the diagrams and assigned concepts; full paper derivations are extension material.</p></div><div class="resource-grid" id="resource-grid"></div><button class="button button-outline resource-toggle" id="resource-toggle" aria-expanded="false" aria-controls="resource-grid">Show all 12 resources <span aria-hidden="true">+</span></button></section>
-    <section class="closing wrap"><div><span class="eyebrow">YOUR NEXT STEP</span><h2>Start with a question.<br>Leave with a working model.</h2></div><a class="button button-dark" href="#syllabus">Choose a lesson <span aria-hidden="true">↗</span></a></section>
   </main>
-  <footer class="site-footer wrap"><div><a class="brand" href="#"><img src="assets/favicon.svg" alt="" width="32" height="32"><span>VIBE<span class="brand-sub">COURSE STUDIO</span></span></a><p>HUST · School of Software Engineering<br>Foundation models, across language and vision.</p></div><div class="footer-links"><a href="https://github.com/vibe-hust/llm_lesson" target="_blank" rel="noopener noreferrer">Course repository ↗</a><a href="syllabus.md" download>Download syllabus ↓</a><a href="#courses">Course information ↑</a></div><span class="footer-draft">A course in development.<br>Syllabus draft · 29 October 2026</span></footer>
+  <footer class="site-footer"><div class="wrap footer-inner"><p>VIBE · HUST School of Software Engineering<br><span>Course materials in development · Syllabus draft, 29 October 2026</span></p><div><a href="https://github.com/vibe-hust/llm_lesson" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#courses">Back to top ↑</a></div></div></footer>
   <dialog id="lesson-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span id="dialog-eyebrow" class="eyebrow"></span><button class="dialog-close" aria-label="Close lesson details">×</button></div><div id="dialog-content"></div><div class="dialog-bottom"><button id="previous-lesson" class="text-link">← Previous</button><span id="dialog-counter"></span><button id="next-lesson" class="text-link">Next lesson →</button></div></dialog>
 </body>
 </html>

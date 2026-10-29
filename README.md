@@ -1,4 +1,4 @@
-# VIBE Course Studio
+# VIBE Courses
 
 A public course website for two connected courses at HUST's School of Software Engineering:
 
@@ -22,7 +22,7 @@ npm run check
 npm run dev
 ```
 
-The preview is served at `http://127.0.0.1:4173`. Python 3 and Node.js 22 or later are sufficient. Typography follows the [CMU Robotics Institute faculty page](https://www.ri.cmu.edu/ri-faculty/jun-yan-zhu/): Open Sans for body text and Roboto for main headings and navigation, with upright headings and normal letter spacing. Google Fonts is optional; Arial and Helvetica are used if it cannot load. Python code remains monospaced.
+The preview is served at `http://127.0.0.1:4173`. Python 3 and Node.js 22 or later are sufficient. The design follows the restrained academic style of the [CMU Robotics Institute faculty page](https://www.ri.cmu.edu/ri-faculty/jun-yan-zhu/): a white background, burgundy links, Open Sans body text, and Roboto headings. Body text is 16px; the homepage title is 30px, lesson titles are 28px, and section headings are 22–24px. Google Fonts is optional; Arial and Helvetica are used if it cannot load. Python code remains monospaced.
 
 ## Detailed lessons and Python exercises
 
@@ -51,12 +51,18 @@ python3 dist/exercises/transformer_fundamentals.py
 python3 dist/exercises/llm_agents.py
 ```
 
+## Page structure
+
+The homepage puts course information first, followed by the two detailed study guides, a table connecting each theory lesson to project preparation, project options, assessment, and readings. The small attention and agent demonstrations remain inside a collapsed disclosure near the end of the page. On mobile, syllabus rows stack vertically so the theory and practical task remain together.
+
+Lesson pages use the same header and navigation, a contents column on desktop, and compact text links above the lesson on smaller screens. The Python exercise flag controls only the Python sections.
+
 ## Editing
 
 - `dist/content.js`: lessons, resources, projects, and project milestones.
 - `dist/index.html`: page structure, course details, and grading proposals.
 - `dist/styles.css`: responsive layout and visual design.
-- `dist/app.js`: lesson filtering, accessible dialogs and tabs, project selector, and demonstrations.
+- `dist/app.js`: syllabus filtering, accessible dialogs and project tabs, resource lists, and demonstrations.
 - `dist/attention.js`: the mathematical attention example.
 - `dist/config.js`: the global Python exercise flag.
 - `dist/lessons/*.html` and `lesson.css`: the detailed lesson pages and reading layout.

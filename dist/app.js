@@ -32,45 +32,13 @@ function wireTabs(selector, onSelect) {
   });
 }
 
-const pathways = {
-  language: { inputType: 'TEXT TOKENS', inputs: ['The', 'model', 'learns', 'to', '…'], model: 'Transformer', description: 'Attention + feed-forward layers', badge: '× N', outputCaption: 'Read the output', outputType: 'NEXT-TOKEN PREDICTION', output: 'create', note: 'illustrative output' },
-  vision: { inputType: 'IMAGE PATCHES', inputs: ['P₁', 'P₂', 'P₃', 'P₄', 'P₅'], model: 'Vision Transformer', description: 'Patch embeddings + attention', badge: 'ViT', outputCaption: 'Read the output', outputType: 'VISUAL REPRESENTATION', output: 'image features', note: 'illustrative pathway' },
-  agent: { inputType: 'TASK + OBSERVATIONS', inputs: ['Goal', 'State', 'Tools', 'Result', '…'], model: 'LLM controller', description: 'Select an action using context', badge: '↻', outputCaption: 'Execute, observe, repeat', outputType: 'BOUNDED TOOL USE', output: 'search_documents()', note: 'illustrative action' },
-};
-wireTabs('[data-path]', button => {
-  const mode = button.dataset.path;
-  const path = pathways[mode];
-  $('#path-panel').setAttribute('aria-labelledby', button.id);
-  $('#input-type').textContent = path.inputType;
-  $('#diagram-input').innerHTML = path.inputs.map(value => `<span${mode === 'vision' ? ' class="image-patch"' : ''}>${value}</span>`).join('');
-  $('#model-label').textContent = path.model;
-  $('#model-description').textContent = path.description;
-  $('#model-badge').textContent = path.badge;
-  $('#output-caption').textContent = path.outputCaption;
-  $('#output-type').textContent = path.outputType;
-  $('#diagram-output').innerHTML = `<span>${path.output}</span><div class="probability-bar"><i></i></div><span class="output-label">${path.note}</span>`;
-});
-
-const menuButton = $('.menu-toggle');
-menuButton.addEventListener('click', () => {
-  const open = menuButton.getAttribute('aria-expanded') !== 'true';
-  menuButton.setAttribute('aria-expanded', String(open));
-  menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-  $('#main-nav').classList.toggle('open', open);
-});
-function closeMenu() {
-  menuButton.setAttribute('aria-expanded', 'false');
-  menuButton.setAttribute('aria-label', 'Open navigation');
-  $('#main-nav').classList.remove('open');
-}
-$$('#main-nav a').forEach(link => link.addEventListener('click', closeMenu));
-document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
-
 function renderLessons(filter = 'all') {
   const selected = lessons.filter(lesson => filter === 'all' || lesson.track === filter);
   $('#lesson-count').textContent = `${selected.length} lessons · ${selected.reduce((sum, item) => sum + item.hours, 0)} teaching hours`;
-  $('#lesson-grid').innerHTML = selected.map(lesson => `<button class="lesson" data-lesson="${lesson.id}" data-track="${lesson.track}" aria-haspopup="dialog" aria-label="Lesson ${lesson.id}: ${lesson.title}">
-    <span class="lesson-number">${padded(lesson.id)}</span><span class="lesson-body"><span class="lesson-meta"><i class="topic-dot" aria-hidden="true"></i>${tracks[lesson.track].label.toUpperCase()}<span>· ${lesson.hours}H</span></span><h3>${lesson.title}</h3><p>${lesson.description}</p></span><span class="lesson-arrow" aria-hidden="true">↗</span></button>`).join('');
+  $('#lesson-grid').innerHTML = selected.map(lesson => `<tr data-track="${lesson.track}">
+    <td class="lesson-number">${padded(lesson.id)}<span>${lesson.hours}h</span></td>
+    <th scope="row" class="lesson-theory"><button class="lesson-title" data-lesson="${lesson.id}" aria-haspopup="dialog" aria-label="Lesson ${lesson.id}: ${lesson.title}">${lesson.title}</button><p>${lesson.description}</p><span class="lesson-topic">${tracks[lesson.track].label}</span></th>
+    <td class="lesson-practice"><p>${lesson.practice}</p><span class="lesson-lab">${lesson.lab}</span></td></tr>`).join('');
   $$('[data-lesson]').forEach(button => button.addEventListener('click', () => openLesson(Number(button.dataset.lesson))));
 }
 $$('[data-filter]').forEach(button => button.addEventListener('click', () => {
@@ -134,7 +102,7 @@ function updateAttention() {
   const rows = example.queries.map((query, index) => attentionWeights(query, example.keys, { causal, queryIndex: index, temperature }));
   $('#attention-matrix').innerHTML = `<div class="matrix-row" role="row"><span class="matrix-label" role="columnheader" aria-label="Query / key">Q / K</span>${example.labels.map(label => `<span class="matrix-label" role="columnheader">${label}</span>`).join('')}</div>` + rows.map((row, index) => `<div class="matrix-row${index === queryIndex ? ' selected' : ''}" role="row"><span class="matrix-label" role="rowheader">${example.labels[index]}</span>${row.map((weight, keyIndex) => {
     const masked = causal && keyIndex > index;
-    return `<span class="matrix-cell${masked ? ' masked' : ''}" role="cell" ${masked ? '' : `style="background:rgba(226,140,101,${0.10 + weight * 0.8})"`} aria-label="${example.labels[index]} to ${example.labels[keyIndex]}: ${masked ? 'masked' : `${(weight * 100).toFixed(1)} percent`}">${masked ? '—' : `${Math.round(weight * 100)}%`}</span>`;
+    return `<span class="matrix-cell${masked ? ' masked' : ''}" role="cell" ${masked ? '' : `style="background:rgba(158,40,55,${0.04 + weight * 0.25})"`} aria-label="${example.labels[index]} to ${example.labels[keyIndex]}: ${masked ? 'masked' : `${(weight * 100).toFixed(1)} percent`}">${masked ? '—' : `${Math.round(weight * 100)}%`}</span>`;
   }).join('')}</div>`).join('');
   const weights = rows[queryIndex];
   const highest = weights.indexOf(Math.max(...weights));
@@ -190,17 +158,17 @@ $('#agent-reset').addEventListener('click', () => {
 function renderProject(id) {
   const project = projects.find(item => item.id === id);
   $('#project-panel').setAttribute('aria-labelledby', `project-${id}`);
-  $('#project-panel').innerHTML = `<div class="project-copy"><span class="eyebrow">${project.label.toUpperCase()}</span><h3>${project.title}</h3><p>${project.brief}</p><div class="project-connection"><span>CONNECTS THE THEORY</span>${project.theory}</div></div><div class="project-toolbox"><span class="control-label">YOUR TOOLS</span><div class="tool-list">${project.tools.map(tool => `<code>${tool}</code>`).join('')}</div><span class="control-label">WHAT YOU WILL DELIVER</span><ul>${project.deliverables.map(item => `<li>${item}</li>`).join('')}</ul><p>${project.metrics}</p></div>`;
+  $('#project-panel').innerHTML = `<div class="project-copy"><span class="eyebrow">${project.label}</span><h3>${project.title}</h3><p>${project.brief}</p><div class="project-connection"><span>Theory connection</span>${project.theory}</div></div><div class="project-toolbox"><span class="control-label">Tools</span><div class="tool-list">${project.tools.map(tool => `<code>${tool}</code>`).join('')}</div><span class="control-label">Deliverables</span><ul>${project.deliverables.map(item => `<li>${item}</li>`).join('')}</ul><p>${project.metrics}</p></div>`;
 }
 wireTabs('[data-project]', button => renderProject(button.dataset.project));
 renderProject('software');
-$('#milestones').innerHTML = milestones.map(([day, title, description]) => `<li class="milestone"><span>${day}<small>DAY${day.includes('–') ? 'S' : ''}</small></span><div><h4>${title}</h4><p>${description}</p></div></li>`).join('');
+$('#milestones').innerHTML = milestones.map(([day, title, description]) => `<li class="milestone"><span>${day}<small>day${day.includes('–') ? 's' : ''}</small></span><div><h4>${title}</h4><p>${description}</p></div></li>`).join('');
 
 const featuredIds = ['attention', 'vit', 'dit', 'clip', 'react', 'pytorch'];
 const orderedResources = [...featuredIds.map(resourceById), ...resources.filter(item => !featuredIds.includes(item.id))];
 let allResources = false;
 function renderResources() {
-  $('#resource-grid').innerHTML = (allResources ? orderedResources : orderedResources.slice(0, 6)).map(resource => `<a class="resource" href="${resource.url}" target="_blank" rel="noopener noreferrer" aria-label="${resource.title}, ${resource.kind}, opens in a new tab"><div class="resource-top"><span>${resource.kind.toUpperCase()} / ${resource.topic.toUpperCase()}</span><span aria-hidden="true">↗</span></div><h3>${resource.title}</h3><span class="resource-author">${resource.author}</span><p>${resource.note}</p></a>`).join('');
+  $('#resource-grid').innerHTML = (allResources ? orderedResources : orderedResources.slice(0, 6)).map(resource => `<a class="resource" href="${resource.url}" target="_blank" rel="noopener noreferrer" aria-label="${resource.title}, ${resource.kind}, opens in a new tab"><div class="resource-top"><span>${resource.kind} · ${resource.topic}</span><span aria-hidden="true">↗</span></div><h3>${resource.title}</h3><span class="resource-author">${resource.author}</span><p>${resource.note}</p></a>`).join('');
   $('#resource-toggle').setAttribute('aria-expanded', String(allResources));
   $('#resource-toggle').innerHTML = allResources ? 'Show selected resources <span aria-hidden="true">−</span>' : `Show all ${resources.length} resources <span aria-hidden="true">+</span>`;
 }

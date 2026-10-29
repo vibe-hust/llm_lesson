@@ -22,7 +22,7 @@ npm run check
 npm run dev
 ```
 
-The preview is served at `http://127.0.0.1:4173`. Python 3 and Node.js 22 or later are sufficient. Google Fonts is optional; system fonts are used if it cannot load.
+The preview is served at `http://127.0.0.1:4173`. Python 3 and Node.js 22 or later are sufficient. Typography follows the [CMU Robotics Institute faculty page](https://www.ri.cmu.edu/ri-faculty/jun-yan-zhu/): Open Sans for body text and Roboto for main headings and navigation, with upright headings and normal letter spacing. Google Fonts is optional; Arial and Helvetica are used if it cannot load. Python code remains monospaced.
 
 ## Detailed lessons and Python exercises
 

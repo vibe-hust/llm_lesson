@@ -2,8 +2,8 @@
 
 A public course website for two connected courses at HUST's School of Software Engineering:
 
-- **Core Principles and Frontier Applications of Large Models** — 大模型核心原理与应用前沿
-- **Large Models and AI Agents: Project Design** — 大模型与智能体课程设计
+- **Core Principles and Frontier Applications of Large Models**
+- **Large Models and AI Agents: Project Design**
 
 The proposed audience is second-year undergraduates in their spring semester. The syllabus is a draft; teaching hours, project duration, credits, and dates are not an approved institutional schedule.
 

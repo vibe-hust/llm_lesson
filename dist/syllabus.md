@@ -6,8 +6,8 @@ Syllabus draft — 29 October 2026
 
 ## Two connected courses
 
-1. **Core Principles and Frontier Applications of Large Models** (大模型核心原理与应用前沿).
-2. **Large Models and AI Agents: Project Design** (大模型与智能体课程设计).
+1. **Core Principles and Frontier Applications of Large Models**.
+2. **Large Models and AI Agents: Project Design**.
 
 Audience: second-year undergraduates in their spring semester.
 

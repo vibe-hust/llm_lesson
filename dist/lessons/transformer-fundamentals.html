@@ -9,7 +9,7 @@
   <link rel="icon" href="../assets/favicon.svg?v=academic-1" type="image/svg+xml">
   <link rel="stylesheet" href="../styles.css?v=academic-3">
   <link rel="stylesheet" href="lesson.css?v=academic-1">
-  <script type="module" src="lesson.js?v=academic-1"></script>
+  <script type="module" src="lesson.js?v=academic-2"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -108,7 +108,6 @@ Y = H + FeedForward(LayerNorm(H))</code></pre>
             <button class="button button-dark" data-run disabled>Run Python</button>
             <button class="button button-outline" data-stop hidden>Stop</button>
             <button class="button button-outline" data-reset disabled>Reset code</button>
-            <a href="../exercises/transformer_fundamentals.py" download>Download original .py ↓</a>
           </div>
           <p id="python-status" class="exercise-status" data-status role="status">Open the exercise to load its code.</p>
           <pre class="exercise-output" data-output aria-label="Python output" tabindex="0">Your output will appear here.</pre>
@@ -128,8 +127,6 @@ Output vectors (3 x 2):
             <li>Restore the causal mask and change only the last row of <code>X</code> to <code>[4.0, -2.0]</code>. Verify that the first two output vectors remain unchanged. Repeat without the mask.</li>
             <li>Restore the original input and set every row of <code>W_V</code> to zero. Explain why the attention weights stay the same while every output vector becomes zero.</li>
           </ol>
-          <p>To run the downloaded original file locally with Python 3.9 or later:</p>
-          <pre><code>python3 transformer_fundamentals.py</code></pre>
         </div>
       </details>
 

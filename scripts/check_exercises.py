@@ -1,4 +1,4 @@
-"""Behavioral checks for the same Python files students run and download."""
+"""Behavioral checks for the Python files students run in the browser."""
 
 import contextlib
 import importlib.util

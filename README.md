@@ -29,7 +29,7 @@ The preview is served at `http://127.0.0.1:4173`. Python 3 and Node.js 22 or lat
 - [Transformer fundamentals](https://vibe-hust.github.io/llm_lesson/lessons/transformer-fundamentals.html): representations, Q/K/V, a worked attention calculation, causal masking, Transformer blocks, and the connection between language and vision.
 - [LLM agents](https://vibe-hust.github.io/llm_lesson/lessons/llm-agents.html): tools, a bounded controller, state, failure cases, and the transition to a multimodal project.
 
-Each lesson includes one collapsible exercise. Students can edit and run it in the browser or download the original Python file. The agent exercise uses a clearly labeled deterministic mock model and fictional data; its controller and tools are real Python code.
+Each lesson includes one collapsible exercise. Students can edit and run it in the browser. The agent exercise uses a clearly labeled deterministic mock model and fictional data; its controller and tools are real Python code.
 
 ### Open or close Python exercises
 
@@ -69,8 +69,8 @@ Lecturer titles, research interests, and public email addresses are based on the
 - `dist/config.js`: the global Python exercise flag.
 - `dist/lessons/*.html` and `lesson.css`: the detailed lesson pages and reading layout.
 - `dist/lessons/lesson.js` and `python-worker.js`: on-demand Python editor and runner.
-- `dist/exercises/*.py`: the exact source used by both the browser and downloads.
-- `dist/syllabus.md`: complete downloadable syllabus; regenerate with `node scripts/export-syllabus.mjs` after editing course data.
+- `dist/exercises/*.py`: the source loaded by the browser exercises.
+- `dist/syllabus.md`: complete syllabus in Markdown; regenerate with `node scripts/export-syllabus.mjs` after editing course data.
 - `scripts/check.mjs`: content, reference, link, and attention checks; also runs the Python exercise tests.
 - `scripts/check_exercises.py`: numerical attention checks and agent success/failure cases.
 

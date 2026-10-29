@@ -64,6 +64,6 @@ for (const file of files.filter(file => file.endsWith('.js'))) {
   execFileSync(process.execPath, ['--check', file]);
 }
 const syllabus = await readFile(path.join(root, 'dist/syllabus.md'), 'utf8');
-for (const lesson of lessons) assert.ok(syllabus.includes(lesson.title), `Download missing lesson ${lesson.id}`);
+for (const lesson of lessons) assert.ok(syllabus.includes(lesson.title), `Syllabus missing lesson ${lesson.id}`);
 execFileSync('python3', [path.join(root, 'scripts/check_exercises.py')], { stdio: 'inherit' });
 console.log(`Passed: 16 lessons, 32 hours, resource mappings, attention checks, ${pages.size} HTML pages and local links, JavaScript syntax, Python exercises, and syllabus completeness.`);

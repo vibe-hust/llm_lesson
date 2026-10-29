@@ -30,7 +30,7 @@ for (const exercise of document.querySelectorAll('[data-python-exercise]')) {
       editor.disabled = run.disabled = reset.disabled = false;
       status.textContent = 'Ready. Edit the code, then run it.';
     } catch {
-      status.textContent = 'Could not load the code. Close and reopen to retry, or download the Python file below.';
+      status.textContent = 'Could not load the code. Check your connection, then close and reopen the exercise to retry.';
     } finally {
       loading = false;
     }
@@ -53,7 +53,7 @@ for (const exercise of document.querySelectorAll('[data-python-exercise]')) {
     status.textContent = 'Loading Python… The first run needs an internet connection.';
     try {
       worker = new Worker(new URL('./python-worker.js', import.meta.url), { type: 'module' });
-      timer = setTimeout(() => finish('Python took too long to load. Try again, or download and run locally.'), 45000);
+      timer = setTimeout(() => finish('Python took too long to load. Check your connection and try again.'), 45000);
       worker.onmessage = ({ data }) => {
         if (data.type === 'ready') {
           clearTimeout(timer);
@@ -64,13 +64,13 @@ for (const exercise of document.querySelectorAll('[data-python-exercise]')) {
           finish('Finished.');
         } else if (data.type === 'error') {
           output.textContent = data.output;
-          finish('Could not complete the run. See the output, or download and run locally.');
+          finish('Could not complete the run. Check the output and code, then try again.');
         }
       };
-      worker.onerror = () => finish('Could not start Python. Try again, or download and run locally.');
+      worker.onerror = () => finish('Could not start Python. Check your connection and try again.');
       worker.postMessage({ code: editor.value });
     } catch {
-      finish('This browser could not start Python. Download the file and run it locally.');
+      finish('This browser could not start Python. Try another browser with web worker support.');
     }
   });
   stop.addEventListener('click', () => finish('Stopped. You can edit the code and run it again.'));

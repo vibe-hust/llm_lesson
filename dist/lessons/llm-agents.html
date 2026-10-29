@@ -9,7 +9,7 @@
   <link rel="icon" href="../assets/favicon.svg?v=academic-1" type="image/svg+xml">
   <link rel="stylesheet" href="../styles.css?v=academic-3">
   <link rel="stylesheet" href="lesson.css?v=academic-1">
-  <script type="module" src="lesson.js?v=academic-1"></script>
+  <script type="module" src="lesson.js?v=academic-2"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -119,7 +119,6 @@ stop with a budget-exhausted result</code></pre>
             <button class="button button-dark" data-run disabled>Run Python</button>
             <button class="button button-outline" data-stop hidden>Stop</button>
             <button class="button button-outline" data-reset disabled>Reset code</button>
-            <a href="../exercises/llm_agents.py" download>Download original .py ↓</a>
           </div>
           <p id="python-status" class="exercise-status" data-status role="status">Open the exercise to load its code.</p>
           <pre class="exercise-output" data-output aria-label="Python output" tabindex="0">Your output will appear here.</pre>
@@ -138,8 +137,6 @@ Tool calls: 2</code></pre>
             <li>Restore the budget to 4. In <code>mock_model</code>, replace the first tool name with <code>"unknown_tool"</code>. Verify that no function with that name executes and that the next decision sees an error.</li>
           </ol>
           <p><strong>Extension:</strong> write a policy that always requests the same search. Pass it as <code>model</code> to <code>run_agent</code> and verify that the budget still stops it.</p>
-          <p>To run the downloaded original file locally with Python 3.9 or later:</p>
-          <pre><code>python3 llm_agents.py</code></pre>
         </div>
       </details>
 

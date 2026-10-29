@@ -53,7 +53,7 @@ python3 dist/exercises/llm_agents.py
 
 ## Page structure
 
-The homepage puts course information first, followed by lecturer profiles, a table connecting each theory lesson to project preparation, project options, assessment, and readings. The small attention and agent demonstrations remain inside a collapsed disclosure near the end of the page. On mobile, syllabus rows stack vertically so the theory and practical task remain together.
+The homepage puts course information first, followed by lecturer profiles, a table connecting each theory lesson to project preparation, assessment, and readings. The small attention and agent demonstrations remain inside a collapsed disclosure near the end of the page. On mobile, syllabus rows stack vertically so the theory and practical task remain together.
 
 Detailed study guides are accessible from the corresponding syllabus entries. Lesson pages use the same header and navigation, a contents column on desktop, and compact text links above the lesson on smaller screens. The Python exercise flag controls only the Python sections.
 
@@ -64,7 +64,7 @@ Lecturer titles, research interests, and public email addresses are based on the
 - `dist/content.js`: lessons, resources, projects, and project milestones.
 - `dist/index.html`: page structure, course details, and grading proposals.
 - `dist/styles.css`: responsive layout and visual design.
-- `dist/app.js`: syllabus filtering, accessible dialogs and project tabs, resource lists, and demonstrations.
+- `dist/app.js`: syllabus filtering, accessible dialogs, resource lists, and demonstrations.
 - `dist/attention.js`: the mathematical attention example.
 - `dist/config.js`: the global Python exercise flag.
 - `dist/lessons/*.html` and `lesson.css`: the detailed lesson pages and reading layout.

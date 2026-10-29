@@ -1,36 +1,10 @@
-import { lessons, tracks, resources, projects, milestones } from './content.js';
+import { lessons, tracks, resources } from './content.js';
 import { attentionWeights, attentionExamples } from './attention.js';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const resourceById = id => resources.find(resource => resource.id === id);
 const padded = value => String(value).padStart(2, '0');
-
-// Each explorer uses standard keyboard tab behavior, including arrow keys.
-function wireTabs(selector, onSelect) {
-  const buttons = $$(selector);
-  const activate = button => {
-    buttons.forEach(item => {
-      item.setAttribute('aria-selected', String(item === button));
-      item.tabIndex = item === button ? 0 : -1;
-    });
-    onSelect(button);
-  };
-  buttons.forEach((button, index) => {
-    button.addEventListener('click', () => activate(button));
-    button.addEventListener('keydown', event => {
-      let next;
-      if (event.key === 'ArrowRight') next = (index + 1) % buttons.length;
-      if (event.key === 'ArrowLeft') next = (index - 1 + buttons.length) % buttons.length;
-      if (event.key === 'Home') next = 0;
-      if (event.key === 'End') next = buttons.length - 1;
-      if (next === undefined) return;
-      event.preventDefault();
-      activate(buttons[next]);
-      buttons[next].focus();
-    });
-  });
-}
 
 function renderLessons(filter = 'all') {
   const selected = lessons.filter(lesson => filter === 'all' || lesson.track === filter);
@@ -154,15 +128,6 @@ $('#agent-reset').addEventListener('click', () => {
   $('#agent-reset').disabled = true;
   $('#agent-next').focus();
 });
-
-function renderProject(id) {
-  const project = projects.find(item => item.id === id);
-  $('#project-panel').setAttribute('aria-labelledby', `project-${id}`);
-  $('#project-panel').innerHTML = `<div class="project-copy"><span class="eyebrow">${project.label}</span><h3>${project.title}</h3><p>${project.brief}</p><div class="project-connection"><span>Theory connection</span>${project.theory}</div></div><div class="project-toolbox"><span class="control-label">Tools</span><div class="tool-list">${project.tools.map(tool => `<code>${tool}</code>`).join('')}</div><span class="control-label">Deliverables</span><ul>${project.deliverables.map(item => `<li>${item}</li>`).join('')}</ul><p>${project.metrics}</p></div>`;
-}
-wireTabs('[data-project]', button => renderProject(button.dataset.project));
-renderProject('software');
-$('#milestones').innerHTML = milestones.map(([day, title, description]) => `<li class="milestone"><span>${day}<small>day${day.includes('–') ? 's' : ''}</small></span><div><h4>${title}</h4><p>${description}</p></div></li>`).join('');
 
 const featuredIds = ['attention', 'vit', 'dit', 'clip', 'react', 'pytorch'];
 const orderedResources = [...featuredIds.map(resourceById), ...resources.filter(item => !featuredIds.includes(item.id))];

@@ -7,7 +7,7 @@
   <meta name="description" content="Learn attention, causal masks, and Transformer blocks across language and vision, with a small runnable Python exercise.">
   <title>Transformer fundamentals · VIBE Courses</title>
   <link rel="icon" href="../assets/favicon.svg?v=academic-1" type="image/svg+xml">
-  <link rel="stylesheet" href="../styles.css?v=academic-3">
+  <link rel="stylesheet" href="../styles.css?v=academic-4">
   <link rel="stylesheet" href="lesson.css?v=academic-1">
   <script type="module" src="lesson.js?v=academic-2"></script>
 </head>
@@ -29,7 +29,7 @@
         <p class="eyebrow">Transformers</p>
         <h1>Transformer fundamentals</h1>
         <p class="lesson-lead">Turn a sequence of vectors into a sequence that uses context. Start with one attention head, then see how it fits into a model for text or images.</p>
-        <p class="lesson-meta-line">Companion to lessons 03–06 · Bridge to lessons 07–08<br>Prerequisites: Python lists, vectors, dot products, and matrix multiplication</p>
+        <p class="lesson-meta-line">Companion to lessons 03–07 · Bridge to lessons 08–09<br>Prerequisites: Python lists, vectors, dot products, and matrix multiplication</p>
       </header>
 
       <section aria-labelledby="goals">
@@ -132,8 +132,8 @@ Output vectors (3 x 2):
 
       <section aria-labelledby="project">
         <h2 id="project">Take this into the project course</h2>
-        <p>Submit the attention matrices with and without a causal mask, one hand-calculated output vector, and your explanation of the future-token test. These are the first evidence items for experiment bundle A.</p>
-        <p>In bundle B, reuse this understanding when implementing a small Transformer block with automatic differentiation. Add a language-model head for text and a classification head for image patches. In the final multimodal agent, distinguish the model that encodes images from the controller that chooses tools.</p>
+        <p>Submit the attention matrices with and without a causal mask, one hand-calculated output vector, and your explanation of the future-token test. These are the first evidence items for preparation exercise A.</p>
+        <p>In preparation exercise B, reuse this understanding when implementing a small Transformer block with automatic differentiation. Add a language-model head for text and a classification head for image patches. In the final multimodal agent, distinguish the model that encodes images from the controller that chooses tools.</p>
         <p><strong>Exit check:</strong> explain why an attention matrix can have shape <code>[16, 16]</code> while its output has shape <code>[16, 64]</code>. Then explain why changing the mask does not change either shape.</p>
       </section>
 
@@ -148,6 +148,6 @@ Output vectors (3 x 2):
     <nav class="lesson-next" aria-label="Lesson navigation"><a href="../index.html#syllabus">← Back to the syllabus</a><a href="llm-agents.html">Next: LLM agents →</a></nav>
   </main>
   </div>
-  <footer class="lesson-footer">HUST · School of Software Engineering · VIBE Courses</footer>
+  <footer class="lesson-footer">HUST · School of Software Engineering · Spring 2027</footer>
 </body>
 </html>

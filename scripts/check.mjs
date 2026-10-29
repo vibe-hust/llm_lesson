@@ -3,7 +3,7 @@ import { readFile, access, readdir } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { lessons, resources, tracks, projects } from '../dist/content.js';
+import { lessons, resources, tracks, projects, preparations } from '../dist/content.js';
 import { attentionWeights, attentionExamples } from '../dist/attention.js';
 import { ENABLE_PYTHON_EXERCISES } from '../dist/config.js';
 
@@ -15,8 +15,16 @@ for (const [id, track] of Object.entries(tracks)) {
   assert.equal(lessons.filter(lesson => lesson.track === id).reduce((sum, lesson) => sum + lesson.hours, 0), track.hours, `${id} hour allocation`);
 }
 for (const lesson of lessons) {
-  assert.ok(lesson.objectives.length && lesson.practice && lesson.evidence);
+  assert.ok(tracks[lesson.track] && lesson.objectives.length && lesson.practice && lesson.evidence && lesson.projectUse);
+  if (lesson.preparation) {
+    assert.ok(preparations.find(item => item.id === lesson.preparation)?.lessons.includes(lesson.id), `Missing preparation mapping for lesson ${lesson.id}`);
+  }
+  if (lesson.guide) await access(path.join(root, 'dist/lessons', `${lesson.guide}.html`));
   for (const id of lesson.reads) assert.ok(resources.some(resource => resource.id === id), `Missing resource ${id}`);
+}
+assert.equal(preparations.length, 4);
+for (const preparation of preparations) {
+  for (const id of preparation.lessons) assert.equal(lessons.find(lesson => lesson.id === id)?.preparation, preparation.id);
 }
 assert.equal(projects.length, 3);
 for (const example of Object.values(attentionExamples)) {

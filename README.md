@@ -5,17 +5,21 @@ A public course website for two connected courses at HUST's School of Software E
 - **Core Principles and Frontier Applications of Large Models**
 - **Large Models and AI Agents: Project Design**
 
-The proposed audience is second-year undergraduates in their spring semester. The syllabus is a draft; teaching hours, project duration, credits, and dates are not an approved institutional schedule.
+The courses serve the 2025 AI Large Model Experimental Class in spring 2027. Both run in the second-year spring semester: 32 theory hours (2 credits), followed by a concentrated two-week course-design project (2 credits). Teams have three students.
 
 ## Course design
 
-The planning basis is 32 teaching hours and a two-week project course. The 16 lessons allocate 12 hours to Transformers, 8 to LLM agents, 4 to visual generation and multimodal learning, and 8 to foundations, adaptation, and evaluation. Visual Transformers also receive dedicated coverage within the Transformer strand.
+The 16 lessons allocate 4 hours to neural networks and PyTorch, 10 to Transformer fundamentals, 8 to language, vision, and multimodal models, 8 to LLM agents, and 2 to integration and frontier examples. Students know Python but are not assumed to have neural-network or PyTorch experience. The required depth is understand and implement; automatic differentiation is used for training and lengthy derivations are optional.
 
-Each lesson connects objectives to an exercise and observable evidence of learning. Individual experiments lead into a group project involving perception, retrieval, tool use, and evaluation.
+Each lesson connects objectives, practical work, evidence, and a specific use in course design. Four individual preparation exercises lead into a team project involving perception, retrieval, tool use, and evaluation. Teams choose different applications under common requirements. Required work uses laptops and teaching-provided language and vision APIs; no GPU is required.
+
+Theory grading is 30% individual exercises, 20% quizzes, and 50% an individual open-book written exam. Project grading is 25% implementation, 25% evaluation and failure analysis, 15% reproducibility, and 35% individual defense and live modification. Preparation work is not graded twice. AI assistance is allowed in exercises and projects with disclosure; the final exam, defense, and live modification are completed without it.
+
+The course structure and policies were settled in the teaching discussion on 29 October 2026. Assignment deadlines, exam duration, and API limits remain operational scheduling details. The full preparation notebooks, live API access, datasets, and capstone sandbox still need to be prepared; only the two detailed browser exercises are currently implemented.
 
 ## Website
 
-The website is buildless HTML, CSS, and JavaScript in `dist/`. GitHub Actions validates the content and publishes this directory to GitHub Pages when `main` changes. No API credentials, paid services, or package installation are required.
+The website is buildless HTML, CSS, and JavaScript in `dist/`. GitHub Actions validates the content and publishes this directory to GitHub Pages when `main` changes. The website and its mock browser exercises need no API credentials or paid services. Live model access for coursework is provided separately by the teaching team.
 
 ```sh
 npm run check
@@ -61,8 +65,8 @@ Lecturer titles, research interests, and public email addresses are based on the
 
 ## Editing
 
-- `dist/content.js`: lessons, resources, projects, and project milestones.
-- `dist/index.html`: page structure, course details, and grading proposals.
+- `dist/content.js`: lessons, preparation exercises, course-design requirements, example applications, and milestones.
+- `dist/index.html`: page structure, course details, and assessment policies.
 - `dist/styles.css`: responsive layout and visual design.
 - `dist/app.js`: syllabus filtering, accessible dialogs, resource lists, and demonstrations.
 - `dist/attention.js`: the mathematical attention example.
@@ -80,4 +84,4 @@ The attention example computes softmax weights from fixed illustrative Q/K vecto
 
 The site includes a skip link, keyboard-operable tabs, native modal dialogs with focus restoration, labeled controls, live status messages, and reduced-motion support. It has no analytics, accounts, cookies, or API secrets. External reading links open in a new tab.
 
-All academic references link to original papers or official documentation. The course content and its proposed assessment were developed from the course-planning discussion.
+All academic references link to original papers or official documentation. The course content and assessment reflect the teaching decisions for spring 2027.

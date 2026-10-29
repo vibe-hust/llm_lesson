@@ -1,4 +1,4 @@
-import { lessons, tracks, resources } from './content.js';
+import { lessons, tracks, resources, preparations, projectRequirements, milestones } from './content.js?v=spring-2027-1';
 import { attentionWeights, attentionExamples } from './attention.js';
 
 const $ = selector => document.querySelector(selector);
@@ -8,7 +8,7 @@ const padded = value => String(value).padStart(2, '0');
 
 function renderLessons(filter = 'all') {
   const selected = lessons.filter(lesson => filter === 'all' || lesson.track === filter);
-  $('#lesson-count').textContent = `${selected.length} lessons · ${selected.reduce((sum, item) => sum + item.hours, 0)} teaching hours`;
+  $('#lesson-count').textContent = `${selected.length} ${selected.length === 1 ? 'lesson' : 'lessons'} · ${selected.reduce((sum, item) => sum + item.hours, 0)} teaching hours`;
   $('#lesson-grid').innerHTML = selected.map(lesson => `<tr data-track="${lesson.track}">
     <td class="lesson-number">${padded(lesson.id)}<span>${lesson.hours}h</span></td>
     <th scope="row" class="lesson-theory"><button class="lesson-title" data-lesson="${lesson.id}" aria-haspopup="dialog" aria-label="Lesson ${lesson.id}: ${lesson.title}">${lesson.title}</button><p>${lesson.description}</p><span class="lesson-topic">${tracks[lesson.track].label}</span></th>
@@ -26,7 +26,7 @@ const dialog = $('#lesson-dialog');
 function showLesson(id) {
   currentLesson = id;
   const lesson = lessons.find(item => item.id === id);
-  const studyGuide = id >= 3 && id <= 6 ? 'transformer-fundamentals' : id >= 12 && id <= 15 ? 'llm-agents' : null;
+  const studyGuide = lesson.guide;
   $('#dialog-eyebrow').textContent = `LESSON ${padded(id)} / ${tracks[lesson.track].label.toUpperCase()} / ${lesson.hours} HOURS`;
   $('#dialog-content').innerHTML = `<h2 id="dialog-title">${lesson.title}</h2><p>${lesson.description}</p>
     ${studyGuide ? `<div class="dialog-section"><a href="lessons/${studyGuide}.html">Open the detailed study guide →</a></div>` : ''}
@@ -34,6 +34,7 @@ function showLesson(id) {
     <div class="dialog-section"><h3>After this lesson, you can</h3><ul>${lesson.objectives.map(item => `<li>${item}</li>`).join('')}</ul></div>
     <div class="dialog-section"><h3>Put it into practice</h3><p>${lesson.practice}</p><span class="dialog-lab">${lesson.lab}</span></div>
     <div class="dialog-section"><h3>Show that you understand</h3><p>${lesson.evidence}</p></div>
+    <div class="dialog-section"><h3>Connection to course design</h3><p>${lesson.projectUse}</p></div>
     <div class="dialog-section"><h3>Read with a purpose</h3>${lesson.reads.map(id => { const resource = resourceById(id); return `<a href="${resource.url}" target="_blank" rel="noopener noreferrer">${resource.title} ↗</a>`; }).join('')}</div>`;
   $('#dialog-counter').textContent = `${padded(id)} / 16`;
   $('#previous-lesson').disabled = id === 1;
@@ -56,6 +57,11 @@ dialog.addEventListener('close', () => { document.body.style.overflow = ''; dial
 $('#previous-lesson').addEventListener('click', () => { if (currentLesson > 1) showLesson(currentLesson - 1); });
 $('#next-lesson').addEventListener('click', () => { if (currentLesson < lessons.length) showLesson(currentLesson + 1); });
 renderLessons();
+
+$('#teaching-allocation').textContent = Object.values(tracks).map(track => `${track.label} ${track.hours}h`).join(' · ');
+$('#preparation-list').innerHTML = preparations.map(item => `<li><strong>${item.id}. ${item.title}</strong> <span class="section-note">Lessons ${padded(item.lessons[0])}–${padded(item.lessons.at(-1))}</span><p>${item.deliverable}</p><p class="section-note">Course-design connection: ${item.projectUse}</p></li>`).join('');
+$('#course-design-requirements').innerHTML = projectRequirements.map(item => `<li>${item}</li>`).join('');
+$('#course-design-schedule').innerHTML = milestones.map(([day, title, description]) => `<li><strong>Day ${day}: ${title}.</strong> ${description}</li>`).join('');
 
 let attentionMode = 'text';
 let queryIndex = 2;
@@ -129,7 +135,7 @@ $('#agent-reset').addEventListener('click', () => {
   $('#agent-next').focus();
 });
 
-const featuredIds = ['attention', 'vit', 'dit', 'clip', 'react', 'pytorch'];
+const featuredIds = ['attention', 'vit', 'clip', 'llava', 'react', 'pytorch'];
 const orderedResources = [...featuredIds.map(resourceById), ...resources.filter(item => !featuredIds.includes(item.id))];
 let allResources = false;
 function renderResources() {

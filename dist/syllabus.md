@@ -1,38 +1,47 @@
-# Foundation Models and LLM Agents
+# Foundation Models and AI Agents
 
-HUST School of Software Engineering · VIBE Lab
+HUST School of Software Engineering · Spring 2027
 
-Syllabus draft — 29 October 2026
+2025 AI Large Model Experimental Class · Second-year undergraduates
 
 ## Two connected courses
 
-1. **Core Principles and Frontier Applications of Large Models**.
-2. **Large Models and AI Agents: Project Design**.
+1. **Core Principles and Frontier Applications of Large Models:** 32 teaching hours, 2 credits.
+2. **Large Models and AI Agents: Project Design:** two concentrated weeks after the core lectures, 2 credits, teams of three.
 
-Audience: second-year undergraduates in their spring semester.
+Both courses run in spring 2027. Students choose different applications under common project requirements and assessment criteria.
 
-Planning basis: 32 teaching hours and a two-week project course. Credits, dates, and final teaching arrangements remain to be confirmed. Students should have basic programming and elementary linear algebra; preparatory Python and tensor exercises provide a bridge to the course.
+## Starting point and required depth
+
+Students know Python and have studied programming, data structures, calculus, linear algebra, probability, and introductory AI. Prior neural-network training or PyTorch experience is not assumed. The first four hours introduce losses, gradients, automatic differentiation, tensor shapes, and a training loop.
+
+The required level is understand and implement: calculate attention, trace tensor dimensions, explain training objectives, and implement core components. Use automatic differentiation for training. Lengthy mathematical derivations, diffusion training, and advanced adaptation are optional extensions.
+
+## Computing resources
+
+Required work runs on student laptops with teaching-provided language and vision APIs. No GPU is required. Small model experiments use supplied CPU training pipelines and datasets; image–text retrieval can use supplied pretrained embeddings. Projects record API usage alongside task success. The browser exercises use standard-library Python, and the browser agent example uses a deterministic mock model rather than a live API.
 
 ## Learning outcomes
 
-Students will explain attention and Transformer blocks; compare language, vision, and visual generative models; choose an appropriate adaptation or retrieval approach; build a bounded agent with tools and state; and evaluate a system using observable results.
+Students will calculate and implement attention; assemble a small Transformer block; compare language, vision, retrieval, and visual question-answering systems; build a bounded agent with tools and state; and evaluate its outputs, evidence, failures, and resource use. Each student will explain the complete workflow and modify part of the implementation.
 
 ## Teaching allocation
 
-- Foundations: 8 hours.
-- Transformers: 12 hours.
-- Vision & multimodal: 4 hours.
+- Neural networks & PyTorch: 4 hours.
+- Transformers: 10 hours.
+- Language, vision & multimodal: 8 hours.
 - LLM agents: 8 hours.
+- Integration & frontiers: 2 hours.
 
 ## Lesson sequence
 
-Each lesson represents two teaching hours. The sequence can run as one lesson per week across a 16-week semester. This is a planning arrangement, not a confirmed timetable.
+Sixteen lessons of two teaching hours each. Each practical task contributes to one of four individual preparation exercises, rather than creating a separate assignment for every lesson. The final lesson connects the course to the team project and selected frontier examples.
 
-### 01. How a model learns
+### 01. How a neural network learns
 
-Foundations · 2 hours
+Neural networks & PyTorch · 2 hours
 
-Data, parameters, losses, and the difference between training and inference.
+Predictions, losses, gradients, parameter updates, and held-out data.
 
 **Essential idea:** A model learns by updating parameters to reduce a loss on training examples. Evaluate the result on separate data.
 
@@ -41,17 +50,42 @@ Data, parameters, losses, and the difference between training and inference.
 - Identify inputs, targets, and trainable parameters.
 - Explain one gradient update and why held-out data matters.
 
-**Practice:** Run a supplied training loop. Change the learning rate and compare training and validation curves.
+**Practice:** Modify a supplied small model and compare training and validation curves on a laptop.
 
 **Evidence:** An annotated learning curve and an explanation of one failed training run.
 
-**Experiment bundle:** A · Representations & attention
+**Preparation exercise:** A · Foundations and attention
+
+**Connection to course design:** Separate development cases from evaluation cases when defining the project baseline.
 
 **Reading:** [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html).
 
-### 02. Text and images become vectors
+### 02. Tensors and training with PyTorch
 
-Foundations · 2 hours
+Neural networks & PyTorch · 2 hours
+
+Tensor shapes, automatic differentiation, and a complete training loop.
+
+**Essential idea:** PyTorch records operations so gradients can be computed automatically. A training loop updates parameters; an evaluation loop measures predictions without updating them.
+
+**Learning objectives:**
+
+- Trace tensor shapes through a small network.
+- Complete a training loop using automatic differentiation and separate evaluation data.
+
+**Practice:** Complete a supplied CPU training loop. Inspect gradients and correct a deliberately introduced shape error.
+
+**Evidence:** A working loop, a tensor-shape trace, and an explanation of training versus evaluation.
+
+**Preparation exercise:** A · Foundations and attention
+
+**Connection to course design:** Write small component checks and distinguish model inference from model training.
+
+**Reading:** [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html).
+
+### 03. Text and images become vectors
+
+Transformers · 2 hours
 
 Text tokens, image patches, embeddings, and sequence length.
 
@@ -66,11 +100,13 @@ Text tokens, image patches, embeddings, and sequence length.
 
 **Evidence:** A diagram with tensor dimensions and a comparison of sequence lengths.
 
-**Experiment bundle:** A · Representations & attention
+**Preparation exercise:** A · Foundations and attention
+
+**Connection to course design:** Choose document chunks and image inputs with an explicit account of context length and information loss.
 
 **Reading:** [LLM Course](https://huggingface.co/learn/llm-course/chapter1/1); [An Image is Worth 16×16 Words](https://arxiv.org/abs/2010.11929).
 
-### 03. Attention, one operation at a time
+### 04. Attention, one operation at a time
 
 Transformers · 2 hours
 
@@ -87,11 +123,13 @@ Queries, keys, values, similarity scores, and softmax.
 
 **Evidence:** A correct numerical example and a working attention function.
 
-**Experiment bundle:** A · Representations & attention
+**Preparation exercise:** A · Foundations and attention
+
+**Connection to course design:** Explain how a model combines context; use task tests rather than attention weights alone to judge evidence support.
 
 **Reading:** [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
-### 04. Masks and multiple heads
+### 05. Masks and multiple heads
 
 Transformers · 2 hours
 
@@ -108,11 +146,13 @@ Causal visibility, parallel attention heads, and cross-attention.
 
 **Evidence:** A masking check and a diagram of multi-head attention dimensions.
 
-**Experiment bundle:** A · Representations & attention
+**Preparation exercise:** A · Foundations and attention
+
+**Connection to course design:** Distinguish the model’s causal visibility from the controller’s record of actions and observations.
 
 **Reading:** [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
-### 05. Build a Transformer block
+### 06. Build a Transformer block
 
 Transformers · 2 hours
 
@@ -125,15 +165,17 @@ Attention, feed-forward layers, residual paths, and normalization.
 - Assemble a block from attention and feed-forward components.
 - Explain the purpose of residual paths and normalization.
 
-**Practice:** Complete a small block in a supplied framework and inspect its intermediate tensors.
+**Practice:** Implement attention and feed-forward components inside a supplied PyTorch block and inspect its tensors.
 
 **Evidence:** A runnable block and an annotated forward-pass diagram.
 
-**Experiment bundle:** B · One block, two applications
+**Preparation exercise:** B · One block, text and images
+
+**Connection to course design:** Explain the model architecture used by the system and distinguish it from the agent controller.
 
 **Reading:** [Attention Is All You Need](https://arxiv.org/abs/1706.03762); [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html).
 
-### 06. Positions, depth, and computation
+### 07. Positions, depth, and computation
 
 Transformers · 2 hours
 
@@ -150,13 +192,15 @@ Positional information, stacked blocks, and attention cost.
 
 **Evidence:** A position experiment and a small cost table with explicit assumptions.
 
-**Experiment bundle:** B · One block, two applications
+**Preparation exercise:** B · One block, text and images
+
+**Connection to course design:** Set context and input-size limits and record their effects on API usage and task results.
 
 **Reading:** [Attention Is All You Need](https://arxiv.org/abs/1706.03762); [An Image is Worth 16×16 Words](https://arxiv.org/abs/2010.11929).
 
-### 07. A Transformer that writes
+### 08. A Transformer that writes
 
-Transformers · 2 hours
+Language, vision & multimodal · 2 hours
 
 Causal language modeling, next-token targets, and sampling.
 
@@ -167,17 +211,19 @@ Causal language modeling, next-token targets, and sampling.
 - Construct correctly shifted next-token targets.
 - Explain how sampling temperature changes a probability distribution.
 
-**Practice:** Use your block in a miniature language model with a supplied training loop. Compare generation settings.
+**Practice:** Add a language-model head to your block and run a supplied tiny CPU training experiment. Compare sampling settings.
 
 **Evidence:** Held-out prediction loss, generation examples, and a clear account of limitations.
 
-**Experiment bundle:** B · One block, two applications
+**Preparation exercise:** B · One block, text and images
+
+**Connection to course design:** Choose generation settings and validate structured model outputs before executing tool calls.
 
 **Reading:** [LLM Course](https://huggingface.co/learn/llm-course/chapter1/1); [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
-### 08. A Transformer that sees
+### 09. A Transformer that sees
 
-Transformers · 2 hours
+Language, vision & multimodal · 2 hours
 
 Vision Transformers, patch embeddings, and visual recognition.
 
@@ -188,76 +234,61 @@ Vision Transformers, patch embeddings, and visual recognition.
 - Trace a patch sequence through a visual Transformer.
 - Compare image classification with causal text generation.
 
-**Practice:** Adapt the shared block to a small image-classification task using a supplied data and training pipeline.
+**Practice:** Add patch embeddings and a classification head to the shared block. Use a supplied tiny CPU dataset and training loop.
 
 **Evidence:** Held-out accuracy, error examples, and a text-versus-image architecture comparison.
 
-**Experiment bundle:** B · One block, two applications
+**Preparation exercise:** B · One block, text and images
+
+**Connection to course design:** Explain the visual model’s inputs and limitations; use a provided vision API for the project rather than relying on the tiny teaching model.
 
 **Reading:** [An Image is Worth 16×16 Words](https://arxiv.org/abs/2010.11929).
 
-### 09. Pretrain once, adapt carefully
+### 10. Align images and text
 
-Foundations · 2 hours
+Language, vision & multimodal · 2 hours
 
-Visual self-supervision, frozen features, instruction tuning, and LoRA.
+Contrastive learning, shared embeddings, image–text similarity, and retrieval.
 
-**Essential idea:** Pretraining and downstream adaptation solve different problems. A useful comparison keeps data and evaluation conditions explicit.
-
-**Learning objectives:**
-
-- Compare frozen-feature transfer with parameter updates.
-- Distinguish prompting, instruction tuning, and efficient adaptation.
-
-**Practice:** Fit the same linear classifier to random and pretrained visual features. Analyze supplied instruction-tuning results.
-
-**Evidence:** A matched transfer comparison and a concise adaptation decision.
-
-**Experiment bundle:** B · One block, two applications
-
-**Reading:** [DINOv2](https://arxiv.org/abs/2304.07193); [LLM Course](https://huggingface.co/learn/llm-course/chapter1/1).
-
-### 10. From noise to an image
-
-Vision & multimodal · 2 hours
-
-Diffusion, conditional generation, latent patches, and DiT.
-
-**Essential idea:** A diffusion model learns a denoising-related prediction and uses repeated sampling steps to generate an image. A Transformer can serve as its backbone.
+**Essential idea:** An image encoder and a text encoder can learn comparable representations. Similarity supports retrieval, while retrieval quality must be checked on labeled queries.
 
 **Learning objectives:**
 
-- Identify the training target and sampling process.
-- Explain how timestep and task conditioning enter a visual generator.
+- Explain matched and mismatched image–text pairs in contrastive learning.
+- Measure whether relevant items appear in the retrieved results.
 
-**Practice:** Complete a toy denoising exercise. Compare sampling steps on a supplied image-generation service.
+**Practice:** Build image–text retrieval using supplied pretrained embeddings. Compare retrieval settings on a small labeled query set.
 
-**Evidence:** A denoising visualization and a controlled quality–cost comparison.
+**Evidence:** Retrieval results, recall at a stated cutoff, and examples of misleading matches.
 
-**Experiment bundle:** C · Generation & multimodal alignment
+**Preparation exercise:** C · Retrieve and inspect visual evidence
 
-**Reading:** [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239); [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748).
+**Connection to course design:** Reuse the retrieval interface and evaluation method when building an evidence lookup tool.
 
-### 11. Connect vision and language
+**Reading:** [Learning Transferable Visual Models](https://arxiv.org/abs/2103.00020).
 
-Vision & multimodal · 2 hours
+### 11. Ask a model about an image
 
-Image–text alignment, retrieval, visual instruction following, and grounding.
+Language, vision & multimodal · 2 hours
 
-**Essential idea:** Matching an image with text and generating an answer about an image are different tasks, with different objectives and failure modes.
+Visual encoders, language-model connections, visual instructions, and grounding.
+
+**Essential idea:** A vision–language model generates an answer from an image and text. Its answer may contain claims that are not supported by the visible evidence.
 
 **Learning objectives:**
 
-- Explain image–text similarity and cross-modal retrieval.
-- Identify statements that are unsupported by visual evidence.
+- Trace an image and question through a vision–language architecture.
+- Identify supported, unsupported, and uncertain claims in an answer.
 
-**Practice:** Build a small image–text retrieval demo and evaluate a supplied vision–language model on image questions.
+**Practice:** Use the teaching-provided vision API on a small set of image questions, including ambiguous images and missing information.
 
-**Evidence:** Retrieval results and an analysis of grounded and unsupported answers.
+**Evidence:** An annotated answer set, a grounding error analysis, and recorded API usage.
 
-**Experiment bundle:** C · Generation & multimodal alignment
+**Preparation exercise:** C · Retrieve and inspect visual evidence
 
-**Reading:** [Learning Transferable Visual Models](https://arxiv.org/abs/2103.00020); [Visual Instruction Tuning](https://arxiv.org/abs/2304.08485).
+**Connection to course design:** Wrap image inspection as a tool that preserves the image source, observations, and uncertainty.
+
+**Reading:** [Visual Instruction Tuning](https://arxiv.org/abs/2304.08485).
 
 ### 12. Give an LLM tools
 
@@ -272,11 +303,13 @@ Tool schemas, structured arguments, execution, and observations.
 - Define a tool with explicit inputs and outputs.
 - Implement a bounded action–observation loop.
 
-**Practice:** Connect an LLM to two simple tools using an explicit Python loop.
+**Practice:** Connect a teaching-provided language-model API to two simple tools using an explicit Python loop.
 
 **Evidence:** Valid tool arguments, correct handling of tool results, and a complete execution trace.
 
-**Experiment bundle:** D · Build and evaluate an agent
+**Preparation exercise:** D · Build and evaluate an agent
+
+**Connection to course design:** Reuse the tool contracts, argument checks, and controller in the team application.
 
 **Reading:** [ReAct](https://arxiv.org/abs/2210.03629); [AI Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction).
 
@@ -297,7 +330,9 @@ Task decomposition, working state, replanning, and termination.
 
 **Evidence:** A state-transition diagram and successful termination on normal and failure cases.
 
-**Experiment bundle:** D · Build and evaluate an agent
+**Preparation exercise:** D · Build and evaluate an agent
+
+**Connection to course design:** Reuse state updates, step limits, and recovery handling in the project agent.
 
 **Reading:** [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents).
 
@@ -314,11 +349,13 @@ Document retrieval, visual observations, and evidence-based actions.
 - Connect retrieval and image inspection to an agent.
 - Trace a recommendation back to evidence from tools.
 
-**Practice:** Investigate a supplied screenshot using project documentation and diagnostic tools.
+**Practice:** Connect the earlier retrieval and visual-inspection interfaces to an agent. Link each recommendation to its sources.
 
 **Evidence:** A task trace linking the screenshot, retrieved sources, actions, and final recommendation.
 
-**Experiment bundle:** D · Build and evaluate an agent
+**Preparation exercise:** D · Build and evaluate an agent
+
+**Connection to course design:** Integrate text and visual evidence for the team’s chosen task, including missing-evidence handling.
 
 **Reading:** [Visual Instruction Tuning](https://arxiv.org/abs/2304.08485); [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents).
 
@@ -335,123 +372,125 @@ Success criteria, retries, budgets, prompt injection, and failure recovery.
 - Define an acceptance test for a multi-step task.
 - Diagnose tool-selection, execution, and evidence failures.
 
-**Practice:** Evaluate a direct model response, fixed workflow, and agent on the same task set. Record their information access and budgets.
+**Practice:** Compare a simpler baseline and the agent on the same cases. Record task success, evidence support, and API usage.
 
-**Evidence:** Task-success results, tool-call counts, and at least three analyzed failure categories.
+**Evidence:** A comparison table with sample counts, usage records, and analyzed normal and failure cases.
 
-**Experiment bundle:** D · Build and evaluate an agent
+**Preparation exercise:** D · Build and evaluate an agent
+
+**Connection to course design:** Reuse the evaluation harness and add cases specific to the chosen application; disclose differences in evidence access and budgets.
 
 **Reading:** [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents); [ReAct](https://arxiv.org/abs/2210.03629).
 
-### 16. Evaluate, explain, and look ahead
+### 16. Integrate, explain, and explore frontiers
 
-Foundations · 2 hours
+Integration & frontiers · 2 hours
 
-Reproducibility, individual architecture walkthroughs, and emerging applications.
+Architecture synthesis and selected examples of diffusion, efficient adaptation, and emerging applications.
 
-**Essential idea:** A useful result includes the conditions under which it was obtained. Extend a system only after deciding how to measure the proposed benefit.
+**Essential idea:** A small implemented component can explain a larger system. Frontier examples extend that understanding without requiring students to reproduce large-scale training.
 
 **Learning objectives:**
 
-- Explain an architecture and an agent execution trace.
-- Propose a testable extension in video, memory, or embodied interaction.
+- Explain the path from model representations to agent actions and evaluation.
+- Relate a selected frontier example to familiar components and a testable application.
 
-**Practice:** Reproduce one result and prepare a one-page extension proposal with an evaluation plan.
+**Practice:** Explain a complete architecture and execution trace, then prepare the team’s task definition and evaluation plan.
 
-**Evidence:** A reproducible report, an individual code walkthrough, and a bounded extension proposal.
+**Evidence:** An architecture walkthrough and a bounded project plan; no additional preparation assignment.
 
-**Experiment bundle:** Final synthesis
+**Preparation exercise:** Integration
 
-**Reading:** [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748); [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents).
+**Connection to course design:** Bring the four preparation exercises into a two-week integration project. Diffusion and advanced adaptation are optional extensions.
 
-## Practical work
+**Reading:** [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239); [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748); [LLM Course](https://huggingface.co/learn/llm-course/chapter1/1).
 
-Individual experiments take place alongside the theory course, with a proposed total of 12–16 hours outside classroom teaching. The teaching team supplies data, training loops, and checkpoints. Students implement selected components and analyze results. The two-week project course focuses on integration and evaluation in groups of about three. The two courses assess distinct outcomes; the same deliverable should not be counted twice.
+## Four individual preparation exercises
 
-- **A: Representations and attention.** Text tokens, image patches, attention calculations, and causal masking.
-- **B: One block, two applications.** A miniature language model, a small Vision Transformer, and a visual-feature transfer comparison.
-- **C: Generation and multimodal alignment.** A toy denoising experiment, controlled generation examples, and image–text retrieval.
-- **D: Build and evaluate an agent.** An explicit loop with tools, state, visual evidence, stopping conditions, and failure tests.
+Complete these during the theory course. Reuse components and methods during course design, but do not count the same submitted work toward both course grades.
 
-## Project tracks
+- **A: Foundations and attention (lessons 1–5).** A short training-loop check, tensor-shape annotations, and attention and masking tests. Course-design connection: Model reasoning, component checks, and evaluation discipline.
+- **B: One block, text and images (lessons 6–9).** A small Transformer block used in supplied language and image training pipelines, with results and limitations. Course-design connection: Architecture explanations and informed choices about model inputs and context.
+- **C: Retrieve and inspect visual evidence (lessons 10–11).** Image–text retrieval results and an evaluation of answers from the teaching-provided vision API. Course-design connection: Retrieval and visual-inspection tools with evidence and uncertainty.
+- **D: Build and evaluate an agent (lessons 12–15).** An explicit tool-use loop, state, stopping conditions, traces, and a comparison against a simpler baseline. Course-design connection: A controller and evaluation harness ready for application-specific integration.
 
-Choose one integration project. The software assistant is the suggested starting point for the first offering.
+## Common course-design requirements
+
+- Work in teams of three. Choose an application with a measurable task and a manageable set of text and visual inputs.
+- Build a working agent with at least two tools, validated inputs, explicit state, and stopping conditions. Use teaching-provided language and vision APIs; no GPU is required.
+- Record actions, tool arguments, observations, sources, and stop reasons so that final answers can be checked against evidence.
+- Compare with a simpler baseline on the same evaluation cases. Include normal tasks, missing evidence, and tool failures; report sample counts, task success, and API usage.
+- Submit a reproducible system and report with a contribution record. Every student explains the complete workflow, defends their decisions, and makes a small live code modification.
+
+## Example applications
+
+Teams may choose an application beyond these examples while meeting the same requirements. These are task briefs; the system and its evaluation are student deliverables.
 
 ### Multimodal software assistant
 
-Given a screenshot of an application error and its documentation, investigate the problem, run a supplied diagnostic test, and explain a recommendation using the results.
+Investigate an application error using a screenshot and documentation, run a supplied diagnostic test, and support a recommendation with results.
 
-**Tools:** `inspect_image`, `search_documents`, `read_project_file`, `run_diagnostic_test`.
+**Example tools:** `inspect_image`, `search_documents`, `run_diagnostic_test`.
 
-**Deliverables:**
+**Evaluation:** Task completion, evidence support, failure recovery, and API usage.
 
-- A working agent in the supplied sandbox
-- An action and observation trace
-- A comparison with a fixed workflow
-- A reproducible evaluation and individual walkthrough
-
-**Evaluation:** Task completion · evidence support · recovery · tool calls.
-
-**Theory connection:** Vision Transformers → visual grounding → LLM tool use → verification.
+**Theory connection:** Visual grounding, retrieval, tool use, and verification.
 
 ### Visual knowledge assistant
 
-Find an item shown in a photograph, retrieve relevant instructions, and answer a question with references to the image and documentation.
+Identify an item in a photograph, retrieve relevant instructions, and answer a question using image and document evidence.
 
-**Tools:** `retrieve_images`, `inspect_image`, `search_documents`.
+**Example tools:** `retrieve_images`, `inspect_image`, `search_documents`.
 
-**Deliverables:**
+**Evaluation:** Retrieval recall, answer correctness, evidence support, and API usage.
 
-- Image and text retrieval
-- Answers with supporting evidence
-- Handling of insufficient information
-- Retrieval and answer evaluation
+**Theory connection:** Visual representations, image–text alignment, retrieval, and agent decisions.
 
-**Evaluation:** Retrieval recall · answer correctness · evidence support.
+### Diagram explanation assistant
 
-**Theory connection:** Visual representations → image–text alignment → retrieval → agent decisions.
+Inspect a technical diagram, retrieve related course material, and explain its components and relationships with references and stated uncertainty.
 
-### Visual creation assistant
+**Example tools:** `inspect_diagram`, `search_documents`, `read_source`.
 
-Interpret a brief, retrieve visual references, generate an image, and perform one bounded revision using a stated evaluation rubric.
+**Evaluation:** Component and relationship accuracy, evidence support, uncertainty handling, and API usage.
 
-**Tools:** `retrieve_references`, `generate_image`, `inspect_result`.
+**Theory connection:** Visual question answering, grounding, retrieval, and evaluation.
 
-**Deliverables:**
+## Two-week course-design sequence
 
-- A bounded generation and revision workflow
-- Recorded prompts and generation settings
-- A controlled comparison of revisions
-- An evaluation using a fixed rubric
+The concentrated project follows the core lectures and individual preparation exercises.
 
-**Evaluation:** Brief adherence · visual quality · revision benefit · cost.
+- **Day 01: Define and establish a baseline.** Choose the application, divide responsibilities, define acceptance criteria, and save baseline results.
+- **Day 02–03: Prepare evidence and tools.** Adapt the retrieval and visual-inspection interfaces. Test each tool and preserve its sources.
+- **Day 04–06: Integrate the agent.** Connect the controller, state, tools, and stop rules. Record end-to-end traces and handle failures.
+- **Day 07–09: Evaluate and reproduce.** Compare with the baseline on the same cases, analyze failures and API usage, and verify reproduction instructions.
+- **Day 10: Demonstrate and defend.** Present the shared system. Each student completes an individual defense and live code modification without AI assistance.
 
-**Theory connection:** Conditional generation → multimodal inspection → tool use → evaluation.
+## Assessment
 
-## Two-week project schedule
+The two courses receive separate grades. Preparation exercises assess individual implementation and experimental evidence. Project assessment covers application-specific integration, evaluation, reproducibility, and individual understanding; reused preparation work is not graded twice.
 
-- **Day 01: Define & baseline.** Agree on tasks, data, responsibilities, and acceptance criteria. Save a direct-response baseline.
-- **Day 02–03: Retrieve & perceive.** Implement retrieval and inspect visual inputs. Check each component separately.
-- **Day 04–05: Ground the answer.** Connect evidence to generated answers. Handle missing information and measure the first baseline.
-- **Day 06–07: Add the agent loop.** Connect tools, state updates, recovery, and stopping conditions.
-- **Day 08–09: Test & explain.** Run controlled comparisons, investigate failures, and prepare reproduction instructions.
-- **Day 10: Demonstrate & defend.** Present the system, explain individual contributions, and make a small live modification.
+**Theory course:** four individual preparation exercises 30%; short quizzes 20%; individual open-book written exam 50%.
 
-## Assessment proposal
+The written exam covers attention calculations, tensor shapes, code tracing, language–vision comparisons, and agent failure diagnosis. Course materials may be consulted; AI assistance is not permitted.
 
-**Theory course:** individual experiments 30%; quizzes 20%; final assessment 50%.
+**Project course:** system implementation 25%; evaluation and failure analysis 25%; engineering and reproducibility 15%; individual defense and live modification 35%.
 
-**Project course:** system implementation 25%; experiments and failure analysis 25%; engineering and reproducibility 15%; individual defense and live modification 35%.
+The first three components receive a shared team score, totaling 65%. Each student earns the remaining 35% individually by explaining a design decision, diagnosing a failure, and making a small live code change. Every student must understand the complete agent workflow.
 
-Each student should explain an architecture, trace an agent execution, and make a small live code change. AI coding assistance is allowed with disclosure; students remain responsible for their work.
+Implementation is assessed against the stated task, tool contracts, state, and stop rules. Evaluation includes a simpler baseline, normal and failure cases, evidence support, sample counts, and API usage. Reproducibility includes clear setup and execution instructions, recorded settings, and contribution records. Disclose differences in evidence access and resource budgets when comparing methods.
 
-For the initial project offering, the teaching team can prepare 30 development cases and 20 hidden acceptance cases. Cases should cover normal tasks, missing evidence, tool-dependent tasks, and failures. Report sample counts, task success, evidence support, and tool-call costs. Compare the direct model response, a fixed workflow, and the agent on the same task set; disclose differences in information access and resource budgets.
+## AI assistance policy
+
+AI assistance is allowed in individual exercises and team projects with disclosure. State what it helped with, which parts of the submission it affected, and how its output was verified. Students remain responsible for the correctness and evidence of their submissions.
+
+The final exam, individual defense, and live code modification are completed without AI assistance.
 
 ## Teaching preparation
 
-Prepare a common Python environment, starter notebooks, small datasets, model checkpoints, model inference access, documented tools, and acceptance tests. Core work should be accessible from ordinary student laptops, with shared compute for larger model inference and demonstrations. Actual model selection and compute availability must be checked before teaching.
+Before teaching, prepare the CPU environment, starter notebooks, small datasets, pretrained embeddings, language and vision API access, tool interfaces, and evaluation cases. Publish assignment deadlines, the exam duration, and API usage limits with the teaching schedule.
 
-The website provides an attention calculator, a scripted agent walkthrough, and detailed study guides for Transformer fundamentals and LLM agents. Each study guide includes a runnable standard-library Python exercise with browser execution. The agent exercise uses a deterministic mock model. Full training notebooks, live model services, datasets, and the capstone sandbox remain teaching-team preparation tasks.
+The website currently includes the attention calculator, scripted agent walkthrough, and detailed Transformer and agent study guides with runnable Python exercises. The full preparation notebooks, live API access, task datasets, and capstone sandbox still need to be prepared for delivery.
 
 ## References
 

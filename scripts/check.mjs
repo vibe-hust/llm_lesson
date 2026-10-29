@@ -54,7 +54,8 @@ for (const [file, { html }] of pages) {
     const target = match[1];
     if (/^https?:/.test(target)) continue;
     const [relative, anchor] = target.split('#');
-    const destination = relative ? path.resolve(path.dirname(file), relative) : file;
+    const pathname = relative.split('?')[0];
+    const destination = pathname ? path.resolve(path.dirname(file), pathname) : file;
     await access(destination);
     if (anchor) assert.ok(pages.get(destination)?.ids.includes(anchor), `Missing anchor ${target} in ${file}`);
   }

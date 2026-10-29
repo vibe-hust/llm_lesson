@@ -77,6 +77,14 @@ code { font-family: var(--mono); }
 .guide-meta { font-size: 13px; color: var(--muted); }
 .guide-link { font-size: 14px; padding-top: 2px; white-space: nowrap; }
 
+/* Lecturer details stay compact and link to their academic profiles. */
+.lecturer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.lecturer { min-width: 0; }
+.lecturer h3 { font-size: 20px; }
+.lecturer p { font-size: 14px; margin-top: 8px; }
+.lecturer .lecturer-role { color: var(--muted); margin-top: 4px; }
+.lecturer-contact { display: inline-block; margin-top: 10px; font-size: 14px; overflow-wrap: anywhere; }
+
 /* The paired syllabus keeps the concept and its practical task in the same row. */
 .syllabus-toolbar { margin: 24px 0 16px; }
 .filter-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
@@ -232,7 +240,7 @@ dialog::backdrop { background: #161a2166; }
   .overview-grid { grid-template-columns: 1fr; gap: 24px; }
   .course-information { border-left: 0; border-top: 1px solid var(--line); padding: 16px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
   .course-information > div + div { margin-top: 0; }
-  .course-pair, .assessment-grid, .project-panel, .resource-grid { grid-template-columns: 1fr; gap: 24px; }
+  .course-pair, .lecturer-grid, .assessment-grid, .project-panel, .resource-grid { grid-template-columns: 1fr; gap: 24px; }
   .course-pair { margin-top: 24px; padding-top: 20px; }
   .course-detail h2 { font-size: 19px; }
   .section { margin-top: 32px; padding-top: 24px; scroll-margin-top: 0; }

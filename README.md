@@ -53,9 +53,11 @@ python3 dist/exercises/llm_agents.py
 
 ## Page structure
 
-The homepage puts course information first, followed by a table connecting each theory lesson to project preparation, project options, assessment, and readings. The small attention and agent demonstrations remain inside a collapsed disclosure near the end of the page. On mobile, syllabus rows stack vertically so the theory and practical task remain together.
+The homepage puts course information first, followed by lecturer profiles, a table connecting each theory lesson to project preparation, project options, assessment, and readings. The small attention and agent demonstrations remain inside a collapsed disclosure near the end of the page. On mobile, syllabus rows stack vertically so the theory and practical task remain together.
 
 Detailed study guides are accessible from the corresponding syllabus entries. Lesson pages use the same header and navigation, a contents column on desktop, and compact text links above the lesson on smaller screens. The Python exercise flag controls only the Python sections.
+
+Lecturer titles, research interests, and public email addresses are based on the academic profiles of [Tao Hu](https://taohu.me/) and [Dingkang Liang](https://dk-liang.github.io/), checked on 29 October 2026.
 
 ## Editing
 

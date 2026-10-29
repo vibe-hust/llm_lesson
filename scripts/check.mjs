@@ -52,7 +52,7 @@ for (const file of files.filter(file => file.endsWith('.html'))) {
 for (const [file, { html }] of pages) {
   for (const match of html.matchAll(/(?:href|src|data-source)="([^"]+)"/g)) {
     const target = match[1];
-    if (/^https?:/.test(target)) continue;
+    if (/^(https?:|mailto:)/.test(target)) continue;
     const [relative, anchor] = target.split('#');
     const pathname = relative.split('?')[0];
     const destination = pathname ? path.resolve(path.dirname(file), pathname) : file;

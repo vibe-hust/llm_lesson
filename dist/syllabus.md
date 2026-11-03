@@ -173,7 +173,7 @@ Attention, feed-forward layers, residual paths, and normalization.
 
 **Connection to course design:** Explain the model architecture used by the system and distinguish it from the agent controller.
 
-**Reading:** [Attention Is All You Need](https://arxiv.org/abs/1706.03762); [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html); [In-context Learning and Induction Heads](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#definition-of-induction-heads); [Sparks of Weight-Space Programming](https://rikiyat.github.io/blog/weight-space-programming/).
+**Reading:** [Attention Is All You Need](https://arxiv.org/abs/1706.03762); [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html); [In-context Learning and Induction Heads](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#definition-of-induction-heads); [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html#induction-heads); [Sparks of Weight-Space Programming](https://rikiyat.github.io/blog/weight-space-programming/).
 
 ### 07. Positions, depth, and computation
 
@@ -497,6 +497,7 @@ The website currently includes the attention calculator, scripted agent walkthro
 - [Learn the Basics](https://docs.pytorch.org/tutorials/beginner/basics/intro.html) — PyTorch. Tensors, gradients, and a complete training loop.
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762) — Vaswani et al. · 2017. Read the attention equation and architecture diagram first.
 - [In-context Learning and Induction Heads](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#definition-of-induction-heads) — Olsson et al. · 2022. Required for Lesson 6. Read “Induction Heads” under “Key Concepts” and trace how the head predicts a repeated continuation.
+- [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html#induction-heads) — Elhage et al. · 2021. Required for Lesson 6. Read “Induction Heads” and trace how a previous-token head helps a second head find the token to copy.
 - [Sparks of Weight-Space Programming](https://rikiyat.github.io/blog/weight-space-programming/) — Takehi et al. · 2026. Required for Lesson 6. Read Experiment 3 and explain how the authors checked the copying heads identified from model weights.
 - [An Image is Worth 16×16 Words](https://arxiv.org/abs/2010.11929) — Dosovitskiy et al. · 2020. Follow an image from patches to a classification output.
 - [DINOv2](https://arxiv.org/abs/2304.07193) — Oquab et al. · 2023. Explore how pretrained visual features transfer to new tasks.

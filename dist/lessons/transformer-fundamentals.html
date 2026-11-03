@@ -22,7 +22,7 @@
     <a href="../index.html#courses">Overview</a><a href="../index.html#lecturers">Lecturers</a><a href="../index.html#syllabus">Syllabus</a><a href="../index.html#assessment">Assessment</a><a href="../index.html#resources">Resources</a>
   </div></nav>
   <div class="lesson-layout wrap">
-    <aside class="lesson-toc"><nav aria-label="On this page"><h2>On this page</h2><a href="#goals">Learning goals</a><a href="#vectors">Input representations</a><a href="#attention">One attention head</a><a href="#mask">Causal masks</a><a href="#block">Transformer blocks</a><a href="#induction-heads">Induction heads</a><a href="#modalities">Language and vision</a><a href="#project">Project connection</a><a href="#reading">Required reading</a></nav></aside>
+    <aside class="lesson-toc"><nav aria-label="On this page"><h2>On this page</h2><a href="#goals">Learning goals</a><a href="#vectors">Input representations</a><a href="#attention">One attention head</a><a href="#mask">Causal masks</a><a href="#block">Transformer blocks</a><a href="#induction-heads">Induction heads</a><a href="#modalities">Language and vision</a><a href="#project">Project connection</a><a href="#reading">Required reading</a><a href="#weight-space-homework">Homework</a></nav></aside>
   <main id="main" class="lesson-document">
     <article>
       <header>
@@ -154,6 +154,22 @@ Output vectors (3 x 2):
           <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Attention Is All You Need</a> — compare Figure 1 and Section 3.2 with the block and attention equations above.</li>
           <li><a href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener noreferrer">An Image Is Worth 16×16 Words</a> — trace how image patches become the input sequence in Figure 1.</li>
         </ul>
+      </section>
+
+      <section aria-labelledby="weight-space-homework">
+        <h2 id="weight-space-homework">Homework · Find copying heads from weights</h2>
+        <p>Reproduce the Python-model row of Figure 1 in Takehi et al.’s Experiment 3. You will rank candidate heads from the released weights, then check your predictions against the authors’ measurements. This is individual work for preparation exercise B. <a href="https://rikiyat.github.io/blog/weight-space-programming/#figure-1">Read the experiment and Figure 1</a>.</p>
+        <h3>Set up on your laptop</h3>
+        <p>Use Python 3 with NumPy on a CPU. Save these three files in the same folder under the names shown. <a href="../exercises/weight_space_homework.py">weight_space_homework.py</a> is the course starter. The authors provide the Python-trained model weights, <a href="https://raw.githubusercontent.com/RikiyaT/lm_understand-logs/4d09ba6d6a7e891dd8063974dfe81b3d78e3494f/exp3_language/networks/python/blocks.npz">blocks.npz</a> (28 MB), and the behavioral measurements, <a href="https://raw.githubusercontent.com/RikiyaT/lm_understand-logs/4d09ba6d6a7e891dd8063974dfe81b3d78e3494f/exp3_language/eval/heads.json">heads.json</a>.</p>
+        <pre aria-label="Set up and run the homework in your Python environment"><code>python -m pip install numpy
+python weight_space_homework.py</code></pre>
+        <h3>Predict, then check</h3>
+        <ol>
+          <li><strong>Rank the heads from weights.</strong> Start with source head <code>L0H5</code>. The script ranks all six heads in layer 2 by how well their query–key weights match the information the source head writes. Record the highest-ranked head and its <code>C_k</code> score. Indices start at zero.</li>
+          <li><strong>Repeat for layer 3.</strong> Change <code>SOURCE_LAYER</code>, <code>SOURCE_HEAD</code>, and <code>TARGET_LAYER</code> to <code>2, 2, 3</code>. Run again and record the top two heads and their scores. Keep both predictions before opening the behavioral results.</li>
+          <li><strong>Check both runs.</strong> For each setting, run <code>python weight_space_homework.py --check</code>. The second table shows how much attention each head paid to the earlier successor when the authors ran the full model on a repeated 40-character string. They label a head as copying when its <code>induct</code> score exceeds <code>0.20</code>. Compare the head IDs that pass this cutoff with your predictions and the Python row in Figure 1.</li>
+        </ol>
+        <p><strong>Submit with exercise B.</strong> Include your code and a table with the source head, candidate head, weight score, and behavioral score. Include one lower-ranked head for comparison. State whether you recovered all three reported copying heads, describe any mismatch, and explain why the two scores can have different values for the same head. <a href="https://github.com/RikiyaT/lm_understand-logs/blob/4d09ba6d6a7e891dd8063974dfe81b3d78e3494f/exp3_language/runs/python_r0/final_answer.md">Compare your weight scores with the authors’ run record</a>.</p>
       </section>
     </article>
     <nav class="lesson-next" aria-label="Lesson navigation"><a href="../index.html#syllabus">← Back to the syllabus</a><a href="llm-agents.html">Next: LLM agents →</a></nav>

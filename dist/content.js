@@ -26,7 +26,7 @@ export const resources = [
   { id: 'attention', title: 'Attention Is All You Need', author: 'Vaswani et al. · 2017', kind: 'Paper', topic: 'Transformers', url: 'https://arxiv.org/abs/1706.03762', note: 'Read the attention equation and architecture diagram first.' },
   { id: 'induction-heads', title: 'In-context Learning and Induction Heads', author: 'Olsson et al. · 2022', kind: 'Paper', topic: 'Transformers', url: 'https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#definition-of-induction-heads', note: 'Required for Lesson 6. Read “Induction Heads” under “Key Concepts” and trace how the head predicts a repeated continuation.' },
   { id: 'transformer-circuits', title: 'A Mathematical Framework for Transformer Circuits', author: 'Elhage et al. · 2021', kind: 'Paper', topic: 'Transformers', url: 'https://transformer-circuits.pub/2021/framework/index.html#induction-heads', note: 'Required for Lesson 6. Read “Induction Heads” and trace how a previous-token head helps a second head find the token to copy.' },
-  { id: 'weight-space', title: 'Sparks of Weight-Space Programming', author: 'Takehi et al. · 2026', kind: 'Research article', topic: 'Transformers', url: 'https://rikiyat.github.io/blog/weight-space-programming/', note: 'Required for Lesson 6. Read Experiment 3 and explain how the authors checked the copying heads identified from model weights.' },
+  { id: 'weight-space', title: 'Sparks of Weight-Space Programming', author: 'Takehi et al. · 2026', kind: 'Research article', topic: 'Transformers', url: 'https://rikiyat.github.io/blog/weight-space-programming/', note: 'Required for Lesson 6. Read Experiment 3 and reproduce the Python-model row of Figure 1 for preparation exercise B.' },
   { id: 'vit', title: 'An Image is Worth 16×16 Words', author: 'Dosovitskiy et al. · 2020', kind: 'Paper', topic: 'Vision', url: 'https://arxiv.org/abs/2010.11929', note: 'Follow an image from patches to a classification output.' },
   { id: 'dino', title: 'DINOv2', author: 'Oquab et al. · 2023', kind: 'Paper', topic: 'Vision', url: 'https://arxiv.org/abs/2304.07193', note: 'Explore how pretrained visual features transfer to new tasks.' },
   { id: 'clip', title: 'Learning Transferable Visual Models', author: 'Radford et al. · 2021', kind: 'Paper', topic: 'Multimodal', url: 'https://arxiv.org/abs/2103.00020', note: 'Study image–text matching and zero-shot classification.' },
@@ -62,7 +62,7 @@ export const preparations = [
       8,
       9
     ],
-    "deliverable": "A small Transformer block used in supplied language and image training pipelines, with results and limitations.",
+    "deliverable": "A small Transformer block used in supplied language and image training pipelines, with results and limitations. Include the Lesson 6 table comparing predictions from weights with measured copying behavior.",
     "projectUse": "Architecture explanations and informed choices about model inputs and context."
   },
   {
@@ -194,8 +194,8 @@ export const lessons = [
       "Assemble a block from attention and feed-forward components.",
       "Explain the purpose of residual paths and normalization."
     ],
-    "practice": "Implement attention and feed-forward components inside a supplied PyTorch block and inspect its tensors.",
-    "evidence": "A runnable block and an annotated forward-pass diagram.",
+    "practice": "Implement attention and feed-forward components inside a supplied PyTorch block. For homework, use the released Python-model weights from Takehi et al. to reproduce the copying-head result in Figure 1.",
+    "evidence": "A runnable block, an annotated forward-pass diagram, and a table comparing your predicted copying heads with the authors’ behavioral scores.",
     "reads": [
       "attention",
       "pytorch",

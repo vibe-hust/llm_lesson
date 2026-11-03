@@ -165,9 +165,9 @@ Attention, feed-forward layers, residual paths, and normalization.
 - Assemble a block from attention and feed-forward components.
 - Explain the purpose of residual paths and normalization.
 
-**Practice:** Implement attention and feed-forward components inside a supplied PyTorch block and inspect its tensors.
+**Practice:** Implement attention and feed-forward components inside a supplied PyTorch block. For homework, use the released Python-model weights from Takehi et al. to reproduce the copying-head result in Figure 1.
 
-**Evidence:** A runnable block and an annotated forward-pass diagram.
+**Evidence:** A runnable block, an annotated forward-pass diagram, and a table comparing your predicted copying heads with the authors’ behavioral scores.
 
 **Preparation exercise:** B · One block, text and images
 
@@ -410,7 +410,7 @@ Architecture synthesis and selected examples of diffusion, efficient adaptation,
 Complete these during the theory course. Reuse components and methods during course design, but do not count the same submitted work toward both course grades.
 
 - **A: Foundations and attention (lessons 1–5).** A short training-loop check, tensor-shape annotations, and attention and masking tests. Course-design connection: Model reasoning, component checks, and evaluation discipline.
-- **B: One block, text and images (lessons 6–9).** A small Transformer block used in supplied language and image training pipelines, with results and limitations. Course-design connection: Architecture explanations and informed choices about model inputs and context.
+- **B: One block, text and images (lessons 6–9).** A small Transformer block used in supplied language and image training pipelines, with results and limitations. Include the Lesson 6 table comparing predictions from weights with measured copying behavior. Course-design connection: Architecture explanations and informed choices about model inputs and context.
 - **C: Retrieve and inspect visual evidence (lessons 10–11).** Image–text retrieval results and an evaluation of answers from the teaching-provided vision API. Course-design connection: Retrieval and visual-inspection tools with evidence and uncertainty.
 - **D: Build and evaluate an agent (lessons 12–15).** An explicit tool-use loop, state, stopping conditions, traces, and a comparison against a simpler baseline. Course-design connection: A controller and evaluation harness ready for application-specific integration.
 
@@ -498,7 +498,7 @@ The website currently includes the attention calculator, scripted agent walkthro
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762) — Vaswani et al. · 2017. Read the attention equation and architecture diagram first.
 - [In-context Learning and Induction Heads](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#definition-of-induction-heads) — Olsson et al. · 2022. Required for Lesson 6. Read “Induction Heads” under “Key Concepts” and trace how the head predicts a repeated continuation.
 - [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html#induction-heads) — Elhage et al. · 2021. Required for Lesson 6. Read “Induction Heads” and trace how a previous-token head helps a second head find the token to copy.
-- [Sparks of Weight-Space Programming](https://rikiyat.github.io/blog/weight-space-programming/) — Takehi et al. · 2026. Required for Lesson 6. Read Experiment 3 and explain how the authors checked the copying heads identified from model weights.
+- [Sparks of Weight-Space Programming](https://rikiyat.github.io/blog/weight-space-programming/) — Takehi et al. · 2026. Required for Lesson 6. Read Experiment 3 and reproduce the Python-model row of Figure 1 for preparation exercise B.
 - [An Image is Worth 16×16 Words](https://arxiv.org/abs/2010.11929) — Dosovitskiy et al. · 2020. Follow an image from patches to a classification output.
 - [DINOv2](https://arxiv.org/abs/2304.07193) — Oquab et al. · 2023. Explore how pretrained visual features transfer to new tasks.
 - [Learning Transferable Visual Models](https://arxiv.org/abs/2103.00020) — Radford et al. · 2021. Study image–text matching and zero-shot classification.

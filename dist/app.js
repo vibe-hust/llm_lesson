@@ -1,4 +1,4 @@
-import { lessons, tracks, resources, preparations, projectRequirements, milestones } from './content.js?v=spring-2027-3';
+import { lessons, tracks, resources, preparations, projectRequirements, milestones } from './content.js?v=spring-2027-4';
 import { attentionWeights, attentionExamples } from './attention.js';
 
 const $ = selector => document.querySelector(selector);

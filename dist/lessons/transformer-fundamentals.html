@@ -22,7 +22,7 @@
     <a href="../index.html#courses">Overview</a><a href="../index.html#lecturers">Lecturers</a><a href="../index.html#syllabus">Syllabus</a><a href="../index.html#assessment">Assessment</a><a href="../index.html#resources">Resources</a>
   </div></nav>
   <div class="lesson-layout wrap">
-    <aside class="lesson-toc"><nav aria-label="On this page"><h2>On this page</h2><a href="#goals">Learning goals</a><a href="#vectors">Input representations</a><a href="#attention">One attention head</a><a href="#mask">Causal masks</a><a href="#block">Transformer blocks</a><a href="#induction-heads">Induction heads</a><a href="#modalities">Language and vision</a><a href="#project">Project connection</a><a href="#reading">Further reading</a></nav></aside>
+    <aside class="lesson-toc"><nav aria-label="On this page"><h2>On this page</h2><a href="#goals">Learning goals</a><a href="#vectors">Input representations</a><a href="#attention">One attention head</a><a href="#mask">Causal masks</a><a href="#block">Transformer blocks</a><a href="#induction-heads">Induction heads</a><a href="#modalities">Language and vision</a><a href="#project">Project connection</a><a href="#reading">Required reading</a></nav></aside>
   <main id="main" class="lesson-document">
     <article>
       <header>
@@ -142,7 +142,13 @@ Output vectors (3 x 2):
       </section>
 
       <section aria-labelledby="reading">
-        <h2 id="reading">Read with a purpose</h2>
+        <h2 id="reading">Required reading</h2>
+        <p>For Lesson 6, read these two selections in order.</p>
+        <ol>
+          <li><a href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#definition-of-induction-heads">Olsson et al., <cite>In-context Learning and Induction Heads</cite></a> (2022). Read “Induction Heads” under “Key Concepts.” For <code>z m r … z</code>, identify which earlier position the final <code>z</code> attends to and which token that helps it predict.</li>
+          <li><a href="https://rikiyat.github.io/blog/weight-space-programming/">Takehi et al., <cite>Sparks of Weight-Space Programming</cite></a> (2026). Read Experiment 3. How did the authors use a repeated random string to check which heads the LLM had identified from the weights?</li>
+        </ol>
+        <h3>Further reading</h3>
         <ul>
           <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Attention Is All You Need</a> — compare Figure 1 and Section 3.2 with the block and attention equations above.</li>
           <li><a href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener noreferrer">An Image Is Worth 16×16 Words</a> — trace how image patches become the input sequence in Figure 1.</li>

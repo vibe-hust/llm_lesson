@@ -24,6 +24,8 @@ export const tracks = {
 export const resources = [
   { id: 'pytorch', title: 'Learn the Basics', author: 'PyTorch', kind: 'Tutorial', topic: 'Foundations', url: 'https://docs.pytorch.org/tutorials/beginner/basics/intro.html', note: 'Tensors, gradients, and a complete training loop.' },
   { id: 'attention', title: 'Attention Is All You Need', author: 'Vaswani et al. · 2017', kind: 'Paper', topic: 'Transformers', url: 'https://arxiv.org/abs/1706.03762', note: 'Read the attention equation and architecture diagram first.' },
+  { id: 'induction-heads', title: 'In-context Learning and Induction Heads', author: 'Olsson et al. · 2022', kind: 'Paper', topic: 'Transformers', url: 'https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#definition-of-induction-heads', note: 'Required for Lesson 6. Read “Induction Heads” under “Key Concepts” and trace how the head predicts a repeated continuation.' },
+  { id: 'weight-space', title: 'Sparks of Weight-Space Programming', author: 'Takehi et al. · 2026', kind: 'Research article', topic: 'Transformers', url: 'https://rikiyat.github.io/blog/weight-space-programming/', note: 'Required for Lesson 6. Read Experiment 3 and explain how the authors checked the copying heads identified from model weights.' },
   { id: 'vit', title: 'An Image is Worth 16×16 Words', author: 'Dosovitskiy et al. · 2020', kind: 'Paper', topic: 'Vision', url: 'https://arxiv.org/abs/2010.11929', note: 'Follow an image from patches to a classification output.' },
   { id: 'dino', title: 'DINOv2', author: 'Oquab et al. · 2023', kind: 'Paper', topic: 'Vision', url: 'https://arxiv.org/abs/2304.07193', note: 'Explore how pretrained visual features transfer to new tasks.' },
   { id: 'clip', title: 'Learning Transferable Visual Models', author: 'Radford et al. · 2021', kind: 'Paper', topic: 'Multimodal', url: 'https://arxiv.org/abs/2103.00020', note: 'Study image–text matching and zero-shot classification.' },
@@ -195,7 +197,9 @@ export const lessons = [
     "evidence": "A runnable block and an annotated forward-pass diagram.",
     "reads": [
       "attention",
-      "pytorch"
+      "pytorch",
+      "induction-heads",
+      "weight-space"
     ],
     "preparation": "B",
     "projectUse": "Explain the model architecture used by the system and distinguish it from the agent controller.",
